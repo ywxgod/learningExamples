@@ -4,6 +4,8 @@
 			throw new Error("Interface constructor called with " + arguments.length +
 "arguments, but expected exactly 2.");
 		}
+		this.name = name;
+		this.methods = [];
 	};
 	
 	window.Interface = Interface;
