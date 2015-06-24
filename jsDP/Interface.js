@@ -15,6 +15,28 @@
 		}
 	};
 	
+	Interface.ensureImplements = function(object){
+		if(arguments.length<2){
+			throw new Error("Function Interface.ensureImplements called with " +
+arguments.length + "arguments, but expected at least 2.");
+		}
+		for(var i=1;i<arguments.length;i++){
+			var interface = arguments[i];
+			if(interface.constructor !== Interface){
+				throw new Error("Function Interface.ensureImplements expects arguments"
++ "two and above to be instances of Interface.");
+			}
+			for(var j=0,len=interface.methods.length;j<len;j++){
+				var method = interface.methods[j];
+				if(!object[method] || typeof object[method] !== 'function'){
+					throw new Error("Function Interface.ensureImplements: object "
++ "does not implement the " + interface.name
++ " interface. Method " + method + " was not found.");
+				}
+			}
+		}
+	};
+	
 	window.Interface = Interface;
 	
 })();
