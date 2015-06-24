@@ -6,6 +6,13 @@
 		}
 		this.name = name;
 		this.methods = [];
+		for(var i=0,len=methods.length;i<len;i++){
+			if(typeof methods[i] !== 'string'){
+				throw new Error("Interface constructor expects method names to be "
++ "passed in as a string.");
+			}
+			this.methods[i] = methods[i];
+		}
 	};
 	
 	window.Interface = Interface;
