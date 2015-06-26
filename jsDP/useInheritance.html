@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Test Inheritance</title>
+		<script src="Inheritance.js"></script>
+	</head>
+	<body>
+		<script>
+			var author = new Author('John',['Book1',"Book2"]);
+			console.log(author.getName());
+			console.log(author.getBooks());
+			
+			function Shape(name,x,y,width,height){
+				this.name = name;
+				this.x = x;
+				this.y = y;
+				this.width = width;
+				this.height = height;
+			}
+			Shape.prototype.getArea = function(){
+				
+			};
+			Shape.prototype.draw = function(){
+				
+			};
+			
+			function Rect(name, x, y, width, height, lineWidth,lineColor){
+				Rect.superClass.constructor.call(this, name, x, y, width, height);
+				this.lineWidth = lineWidth;
+				this.lineColor = lineColor;
+			}
+			extend(Rect, Shape);
+			Rect.prototype.getArea = function(){
+				return this.width*this.height;
+			}
+			
+			var rect = new Rect('rect', 10,10,100,50,1,0x333333);
+			console.log(rect.getArea());
+			
+			
+			
+		</script>
+	</body>
+</html>
