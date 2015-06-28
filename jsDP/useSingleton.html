@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Test Singleton Class</title>
+		<script src="Singleton.js"></script>
+	</head>
+	<body>
+		<script>
+			var singleton = Singleton.getInstance();
+			console.log(singleton.getProp1());
+			console.log(singleton.publicMethod2());
+			singleton.setProp1(100);
+			var singleton2 = Singleton.getInstance();
+			console.log(singleton2.getProp1());
+			console.log(singleton2.publicMethod2());
+		</script>
+	</body>
+</html>
