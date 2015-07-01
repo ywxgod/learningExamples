@@ -15,6 +15,20 @@
 			.setStyle('backgroundColor','#fff');
 			
 			console.log($._elements,$);
+			
+			function testArg1(){
+				console.log('testArg1: ',arguments);//['a','b']
+				return testArg2(arguments);
+			}
+			
+			function testArg2(){
+				console.log('testArg2: ', arguments);//[['a','b']]
+			}
+			
+			testArg1('a','b');
+			
+			
+			
 		</script>
 	</body>
 </html>
