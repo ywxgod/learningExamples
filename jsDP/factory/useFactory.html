@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Test Factory Class</title>
+		<script src="../Interface.js"></script>
+		<script src="SimpleHandle.js"></script>
+	</head>
+	<body>
+		<div id="content"></div>
+		<script>
+			var url = 'http://it-ebooks-api.info/v1/';
+			var searchStr = 'node';
+			var simpleHandle = new SimpleHandle();
+			var callBack = {
+				success: function(responseText, responseXML){
+					var bookData = JSON.parse(responseText);
+					console.log(bookData);
+					var list = createList(bookData.Books);
+					document.getElementById('content').appendChild(list);
+				},
+				failure: function(status){
+					console.log('failure: ',status);
+				}
+			};
+			
+			function createList(books){
+				var ul = document.createElement('ul');
+				var n = books.length;
+				books.forEach(function(book){
+					var bookUrl = url+'book/'+book.ID;
+					var li = document.createElement('li');
+					var a = document.createElement('a');
+					a.href = bookUrl;
+					var text = document.createTextNode(book.Title);
+					//var img = document.createElement('img');
+					//img.src = book.Image;
+					a.appendChild(text);
+					li.appendChild(a);
+					li.title = book.Description;
+					ul.appendChild(li);
+				});
+				return ul;
+			}
+			
+			simpleHandle.request('get', url+'/search/'+searchStr,callBack);
+			
+		</script>
+		
+	</body>
+</html>
