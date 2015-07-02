@@ -1,5 +1,4 @@
-(function(){
-	
+wyin.module('wyin.core.Constants', function(){
 	
 	var constant = {
 		C1: 'a',
@@ -15,10 +14,7 @@
 		return constant[name];
 	}
 	
-	function Constants(args){
-		
-	}
+	function Constants(args){}
 	
-	window.Constants = Constants;
-	
-})();
+	return Constants;
+});

@@ -3,12 +3,16 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Test Factory Class</title>
-		<script src="../Interface.js"></script>
-		<script src="SimpleHandle.js"></script>
+		<script src="../wyin/core/Namespace.js"></script>
+		<script src="../wyin/core/Interface.js"></script>
+		<script src="../wyin/http/SimpleHandle.js"></script>
 	</head>
 	<body>
 		<div id="content"></div>
 		<script>
+			
+			var SimpleHandle = wyin.http.SimpleHandle;
+			
 			var url = 'http://it-ebooks-api.info/v1/';
 			var searchStr = 'node';
 			var simpleHandle = new SimpleHandle();
@@ -44,6 +48,8 @@
 			}
 			
 			simpleHandle.request('get', url+'/search/'+searchStr,callBack);
+			
+			
 			
 		</script>
 		

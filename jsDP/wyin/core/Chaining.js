@@ -1,8 +1,7 @@
-(function(){
+wyin.module('wyin.core.$', function(){
 	
 	function _$(){
 		this._elements = [];
-		console.log(arguments);
 		var argLen = arguments[0].length,
 			ele = null;
 		for(var i=0;i<argLen;i++){
@@ -70,8 +69,8 @@
 		return this;
 	};
 	
-	window.$ = function(){
+	return function(){
 		return new _$(arguments);
-	}
+	};
 	
-})();
+});

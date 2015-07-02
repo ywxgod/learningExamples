@@ -1,6 +1,4 @@
-(function(){
-	
-	
+wyin.module('wyin.core.Singleton', function(){
 	
 	function Singleton(){
 		
@@ -11,7 +9,6 @@
 		function privateMethod2(){
 			return privateProp1+privateProp2;
 		}
-		
 		
 		function init(args){
 			return {
@@ -26,8 +23,6 @@
 			}
 		}
 		
-		
-		
 		return {
 			getInstance: function(args){
 				if(_instance===null){
@@ -39,6 +34,7 @@
 		
 	}
 	
-	window.Singleton = Singleton();
 	
-})();
+	return Singleton();
+	
+});

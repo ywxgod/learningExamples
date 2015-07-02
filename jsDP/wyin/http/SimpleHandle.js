@@ -1,4 +1,6 @@
-(function(){
+wyin.module('wyin.http.SimpleHandle', function(){
+	
+	var Interface = wyin.core.Interface;
 	
 	var AjaxHandler = new Interface('AjaxHandler', ['request', 'createXhrObject']);
 	
@@ -19,8 +21,8 @@
 	
 	SimpleHandle.prototype.createXhrObject = function(){
 		var methods = [
-			function(){return new XMLHttpRequest();},
 			function(){return new ActiveXObject('Msxml2.XMLHTTP');},
+			function(){return new XMLHttpRequest();},
 			function(){return new ActiveXObject('Microsoft.XMLHTTP');}
 		];
 		var xhr = null;
@@ -36,6 +38,5 @@
 		throw new Error('SimpleHandle: can not create an XHR object.');
 	};
 	
-	window.SimpleHandle = SimpleHandle;
-	
-})();
+	return SimpleHandle;
+});

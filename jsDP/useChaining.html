@@ -3,12 +3,16 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Test Chaining</title>
-		<script src="Chaining.js"></script>
+		<script src="wyin/core/Namespace.js"></script>
+		<script src="wyin/core/Chaining.js"></script>
 	</head>
 	<body>
 		<input type="button" value="btn1" id="btn1">
 		<input type="button" value="btn2" id="btn2">
 		<script>
+			
+			var $ = wyin.core.$;
+			
 			$('btn1','btn2').addEvent('click', function(){
 				console.log(arguments);
 			})

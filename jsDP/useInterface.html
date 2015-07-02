@@ -3,10 +3,14 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Test Interface Class</title>
-		<script src="Interface.js"></script>
+		<script src="wyin/core/Namespace.js"></script>
+		<script src="wyin/core/Interface.js"></script>
 	</head>
 	<body>
 		<script>
+			
+			var Interface = wyin.core.Interface;
+			
 			var car = new Interface('car', ['move','stop']);
 			var person = new Interface('person', ['run', 'play']);
 			

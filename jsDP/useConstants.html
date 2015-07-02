@@ -3,10 +3,14 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Test Constants Class</title>
-		<script src="Constants.js"></script>
+		<script src="wyin/core/Namespace.js"></script>
+		<script src="wyin/core/Constants.js"></script>
 	</head>
 	<body>
 		<script>
+			
+			var Constants = wyin.core.Constants;
+			
 			var c1 = Constants.getConstant('C1');
 			console.log(c1);
 			var c8 = Constants.getConstant('C8');

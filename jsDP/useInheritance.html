@@ -3,13 +3,13 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Test Inheritance</title>
-		<script src="Inheritance.js"></script>
+		<script src="wyin/core/Namespace.js"></script>
+		<script src="wyin/core/Inheritance.js"></script>
 	</head>
 	<body>
 		<script>
-			var author = new Author('John',['Book1',"Book2"]);
-			console.log(author.getName());
-			console.log(author.getBooks());
+			
+			var extend = wyin.core.extend;
 			
 			function Shape(name,x,y,width,height){
 				this.name = name;

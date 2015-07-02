@@ -1,4 +1,4 @@
-(function(){
+wyin.module('wyin.core.Interface', function(){
 	var Interface = function(name, methods){
 		if(arguments.length !== 2){
 			throw new Error("Interface constructor called with " + arguments.length +
@@ -37,6 +37,5 @@ arguments.length + "arguments, but expected at least 2.");
 		}
 	};
 	
-	window.Interface = Interface;
-	
-})();
+	return Interface;
+});
