@@ -4,8 +4,10 @@
 		<meta charset="utf-8">
 		<title>Test Factory Class</title>
 		<script src="../wyin/core/Namespace.js"></script>
+		<script src="../wyin/core/Inheritance.js"></script>
 		<script src="../wyin/core/Interface.js"></script>
 		<script src="../wyin/http/SimpleHandle.js"></script>
+		<script src="../wyin/http/QueuedHandle.js"></script>
 	</head>
 	<body>
 		<div id="content"></div>
@@ -48,6 +50,19 @@
 			}
 			
 			simpleHandle.request('get', url+'/search/'+searchStr,callBack);
+			
+			var searchs = ['react','angular','jquery','cookbook','mining']
+			
+			var QueuedHandle = wyin.http.QueuedHandle;
+			var queueHandle = new QueuedHandle();
+			
+			searchs.forEach(function(str){
+				queueHandle.request('get', url+'/search/'+str, callBack);
+			});
+			
+			//queueHandle.request('get', url+'/search/'+'php', callBack);
+			
+			
 			
 			
 			
