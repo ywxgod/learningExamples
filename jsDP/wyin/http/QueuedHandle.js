@@ -11,9 +11,14 @@ wyin.module('wyin.http.QueuedHandle', function(){
 	
 	QueuedHandle.prototype.request = function(method, url, callback, postVars, override){
 		if(this.requestInProcess && !override){
-			this.queue.push(method,url,callback,postVars);
+			this.queue.push({
+				method: method,
+				url: url,
+				callback: callback,
+				postVars: postVars
+			});
 		}else{
-			this.requestInProcess = false;
+			this.requestInProcess = true;
 			var xhr = this.createXhrObject();
 			var self = this;
 			xhr.onreadystatechange = function(){

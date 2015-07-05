@@ -21,8 +21,8 @@ wyin.module('wyin.http.SimpleHandle', function(){
 	
 	SimpleHandle.prototype.createXhrObject = function(){
 		var methods = [
-			function(){return new ActiveXObject('Msxml2.XMLHTTP');},
 			function(){return new XMLHttpRequest();},
+			function(){return new ActiveXObject('Msxml2.XMLHTTP');},
 			function(){return new ActiveXObject('Microsoft.XMLHTTP');}
 		];
 		var xhr = null;
