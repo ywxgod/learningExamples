@@ -122,11 +122,23 @@ function createRenderer(){
 
 function render3d(){
     requestAnimationFrame(render3d);
+    /*control.rspeed += 0.0001;
+    control.bspeed += 4;
     objects.forEach(function(obj){
-        control.rspeed += 0.01;
-        control.bspeed += 0.02;
-        obj.rotation.y += Math.sin(control.bspeed)*5;
-        obj.position.x += 10*Math.cos(control.rspeed);
+        obj.rotation.y += Math.sin(control.bspeed)*0.1;
+        obj.position.x += 0.5*Math.cos(control.rspeed);
+    });*/
+
+    control.rspeed += 0.01;
+    control.bspeed += 0.01;
+    scene.traverse(function(obj){
+        if(obj instanceof THREE.Mesh && obj!==plane){
+            obj.rotation.y += Math.sin(control.bspeed)*0.1;
+            obj.position.x += 0.2*Math.cos(control.rspeed);
+        }
     });
+
+
+    stat.update();
     render.render(scene,camera);
 }
