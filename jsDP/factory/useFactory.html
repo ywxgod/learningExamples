@@ -61,8 +61,10 @@
 			});
 			
 			//queueHandle.request('get', url+'/search/'+'php', callBack);
-			
-			
+
+            simpleHandle.loadJs('dynamicJsTest.js',function(){
+                console.log('loaded');
+            })
 			
 			
 			

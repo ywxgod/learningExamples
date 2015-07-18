@@ -37,6 +37,25 @@ wyin.module('wyin.http.SimpleHandle', function(){
 		}
 		throw new Error('SimpleHandle: can not create an XHR object.');
 	};
+
+    SimpleHandle.prototype.loadJs = function(jsFile, cb){
+        var jsTag = document.createElement('script');
+        if(typeof cb === 'function'){
+            jsTag.onload = cb;
+            //for IE
+            jsTag.onreadystatechange = function(){
+                console.log(jsTag.readyState);
+                if(jsTag.readyState!=4) return;
+                if(jsTag.status != 200){
+                    console.log('Load js file from '+ jsFile + 'failed. Code: '+ jsTag.status);
+                    return;
+                }
+                cb();
+            }
+        }
+        jsTag.src = jsFile;
+        document.body.appendChild(jsTag);
+    };
 	
 	return SimpleHandle;
 });
