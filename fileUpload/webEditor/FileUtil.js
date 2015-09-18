@@ -43,9 +43,10 @@
 		url += 'ext='+param.ext;
 		xhr.open('POST', url, true);
 		xhr.onload = function(){
-			console.log(xhr.response,xhr.responseText,xhr.responseBody);
-			cb(xhr.responseText);
+			console.log(typeof xhr.response);
+			cb(xhr.response);
 		};
+		xhr.responseType = 'json';
 		xhr.send(buffer);
 	}
 	

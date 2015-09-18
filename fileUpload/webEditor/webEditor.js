@@ -6,6 +6,13 @@
 		
 	$(function(){
 		editor = $('#editor');
+		editorPlaceholder = editor.find('div#placeholder');
+		editor.on('click',function(e){
+			if($.contains(editor[0],editorPlaceholder[0])){
+				editorPlaceholder.remove();
+			}
+			restoreSelection();
+		});
 		init();
 	})
 	
@@ -41,7 +48,7 @@
 			if (this.type === 'file' && this.files && this.files.length > 0) {
 				insertFiles(this.files);
 			}
-			saveSelection();
+			//saveSelection();
 		});
 		editor.wysiwyg({dragAndDropImages: false});
 	}
@@ -91,9 +98,22 @@
 			var fileType = paths[paths.length-1];
 			FileUtil.uploadFile(data,uploadUrl,
 				{"uid":111,"ext":fileType},
-				function(imgUrl){
-					console.log(imgUrl);
-					execCommand('insertImage', imgUrl);
+				function(data){
+					console.log(data.path);
+					execCommand('insertImage', data.path);
+					editor.find('img').each(function(i,img){
+						var src = $(this).attr('src');
+						console.log(this);
+						if(src.lastIndexOf(data.name)!=-1){
+							$(this).css({
+								'max-width': '100%',
+								'height': 'auto',
+								'margin': '0.5rem 0',
+								'box-sizing': 'border-box'
+							});
+						}
+					});
+					//saveSelection();
 					//document.execCommand('insertImage', 0,imgUrl);
 				}
 			);
