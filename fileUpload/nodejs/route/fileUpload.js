@@ -1,5 +1,6 @@
 var fs = require('fs');
 var config = require('./../config');
+var uuid = require('node-uuid');
 
 function FileUploader(){}
 
@@ -15,16 +16,20 @@ FileUploader.prototype.uploadHandler = function(req, res){
 			imageBufs[imageBufs.length]= buffer;
 		});
 		req.on('end',function(){
-			var fileName = new Date().getTime().toString()+'.'+ext;
-			var filePath = imageDir+fileName;
-			var imgData = Buffer.concat(imageBufs);
+			var v4Uuid = uuid.v4(),
+				fileName = v4Uuid+'.'+ext,
+				filePath = imageDir+fileName,
+				imgData = Buffer.concat(imageBufs);
 			
 			fs.writeFile(filePath,imgData,function(err){
 				if(err){
 					res.send('error');
 					return;
 				}
-				res.send(req.protocol+'://'+req.get('host')+'/'+fileName);
+				res.send({
+					path: req.protocol+'://'+req.get('host')+'/'+fileName,
+					name: v4Uuid
+				});
 			});
 		});
 	}else{ //form post
