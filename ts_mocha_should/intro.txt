@@ -1,0 +1,11 @@
+typescript+mocha+should.js
+
+1. 创建代码目录结构，src/app与src/test，分别表示应用代码与测试代码；
+2. 创建tsconfig.json文件，设置必要的ts编译参数。
+3. npm init创建package.json文件.修改test命令为："test": "mocha ./dist/test"
+4. npm install typings mocha -g 全局安装typings，mocha
+5. npm install should -D 依赖should.js
+6. typings install dt~mocha --global 全局安装mocha ts定义
+7. 在test目录创建test.ts
+8. ctrl+shift+B（vscode）创建task runner，并运行ts编译。
+9. npm run test 执行测试代码。
