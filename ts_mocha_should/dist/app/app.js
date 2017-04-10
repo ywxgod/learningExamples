@@ -1,3 +1,2 @@
-let t = new Map();
-t.set('a', 100);
-console.log(t.size);
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });

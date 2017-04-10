@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "run": "node dist/app/app.js",
     "test": "mocha ./dist/test"
   },
   "keywords": [],
