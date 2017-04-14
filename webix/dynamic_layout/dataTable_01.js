@@ -56,7 +56,7 @@ webix.ready(function(){
 
 	
 	table = webix.ui({
-		//container: 'testA',
+		//container: 'testA', //默认是body，占满屏幕。
         autoheight:true,
         autowidth:true,
         rows:[
@@ -71,7 +71,7 @@ webix.ready(function(){
             {
                 id:"scrollview",
                 autoheight:true,
-                rows:[{id:'spacer'}]
+                rows:[{id:'spacer'}] //先放占位符，保证布局起作用，如果直接动态加入gird，布局会失效。
             }
         ]
 	});
@@ -83,9 +83,8 @@ webix.ready(function(){
         $$('layout2').addView(label);
     },100);
     setTimeout(function(){
-        $$('scrollview').addView(gridView,0);
+        $$('scrollview').addView(gridView,0); //删除占位
         $$('scrollview').removeView('spacer');
-        //table.resizeChildren();
     },3000);
 	
 });
