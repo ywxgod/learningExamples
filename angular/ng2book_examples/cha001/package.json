@@ -2,7 +2,7 @@
   "name": "ngbook-cha001",
   "version": "0.0.1",
   "scripts": {
-    "build": "webpack -p"
+    "build": "webpack"
   },
   "dependencies": {
     "@angular/common": "^4.0.0",
@@ -20,6 +20,9 @@
   },
   "devDependencies": {
     "@types/core-js": "^0.9.41",
+    "@types/node": "^7.0.18",
+    "angular2-template-loader": "^0.6.2",
+    "raw-loader": "^0.5.1",
     "ts-loader": "^2.0.3",
     "typescript": "^2.3.2",
     "webpack": "^2.5.0"

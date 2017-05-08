@@ -2,7 +2,10 @@ import {Component, OnInit} from '@angular/core';
 
 @Component({
     selector:"my-app",
-    template: `<h1>Hello,Angular - {{appName}}</h1>`
+    template: `
+        <h1>Hello,Angular - {{appName}}</h1>
+        <app-hello-world></app-hello-world>
+    `
 })
 export class AppComponent implements OnInit{
 

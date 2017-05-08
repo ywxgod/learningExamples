@@ -7,19 +7,29 @@ module.exports = {
     },
     output:{
         path: path.join(__dirname,'dist'),
-        filename: "[name].bundle.js"
+        filename: "[name].bundle.js",
+        chunkFilename:'[name].[ext]'
     },
     module:{
         exprContextCritical: false,
         rules:[
             {
                 test:/\.ts$/, 
-                loader:"ts-loader",
-                exclude:/node_modules/
-            }
+                loaders:["ts-loader","angular2-template-loader?keepUrl=true"],
+                exclude: [/\.(spec|e2e)\.ts$/]
+            },
+            {
+                test:/\.(html|css)$/,
+                loader: 'raw-loader',
+                exclude:/\.async\.(html|css)$/
+            }/*,
+            {
+      test: /\.async\.(html|css)$/, 
+      loaders: ['file?name=[name].[hash].[ext]', 'extract']
+    }*/
         ]
     },
     resolve:{
-        extensions:['.ts','.js']
+        extensions:['.ts','.js','.css','.html']
     }
 }
