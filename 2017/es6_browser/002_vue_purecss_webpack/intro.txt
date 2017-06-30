@@ -16,6 +16,7 @@ node-sass
 vue
 vue-loader
 vue-template-compiler 针对单文件组件的vue模板编译器
+purecss 
 nodemon
 
 
@@ -34,6 +35,7 @@ nodemon
 	2). 修改package.json的scripts块，从npm运行相关build命令，如：
 		"build:dev": "nodemon --watch webpack.config.js --exec \"webpack-dev-server --env development\""
 		"build:prod": "webpack --env production"
+
 //TODO: 2. 处理production版本时，uglifyJS插件报错
 	1). 安装babel-preset-es2015, 开发依赖
 	2). 修改babel-loader的配置如下：
@@ -53,6 +55,7 @@ nodemon
 			"presets":["es2015"],
 			"comments": false
 		}
+
 //TODO: 3. 提取css(有scss)
 	1). 安装css-loader，style-loader，saas-loader，node-sass
 	2). 增加处理css、scss文件的处理规则，如：
@@ -83,14 +86,28 @@ nodemon
 				}
 			}
 		}
+	4). 修改extract-text-webpack-plugin生成css文件的文件名配置项，如下：
+		new ExtractTextWebpackPlugin('./[name]-[chunkhash:8].css')
+		设置提取的css文件名时，不要写死，否则vue组件提取出的样式会与purecss的样式二者不会被合并到一个css文件中。
+		用变量可以生成对应的css文件，即：
+		项目css文件(包括vue组件提取的样式，开发者写的独立css/scss文件)会被提取到一个css文件；
+		purecss的样式会被CommonsChunkPlugin作为公共代码提取到一个css文件
+
 //TODO: 4. 提取公共库
 	1). 在plugins中增加CommonsChunkPlugin插件，如：
 		new CommonsChunkPlugin({
 			name: 'vendor',
 			minChunks: (module)=>{return module.context&&/node_modules/.test(module.context);}
 		})
+
 //TODO: 4. 使用purecss
-//TODO: 5. 使用awsomefonts
+	1). 安装purecss
+	2). css-loader的modules配置为false。
+	3). 通过 import 'purecss'; 导入purecss, 然后在vue文件的template标签中使用purecss提供的各种样式
+
+//TODO: 5. 删除css框架(purecss)中没有用到的样式，以减少最后的css文件大小。
+
+//TODO: 6. 使用awsomefonts
 
 
 

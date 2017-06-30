@@ -22,7 +22,9 @@ const styleRules = ExtractTextWebpackPlugin.extract({
 		{
 			loader: 'css-loader',
 			options: {
-				modules: true
+				modules: false
+				// importLoaders: true,
+  				// localIdentName: '[hash:base64]'
 			}
 		},
 		'sass-loader'
@@ -57,7 +59,7 @@ let entry = {
 };
 let output = {
 	path: APP_PATH.BUILD,
-	filename: '[name]-[chunkhash].js'
+	filename: '[name]-[chunkhash:8].js'
 };
 let rules = [
 	{
@@ -71,18 +73,22 @@ let rules = [
 		}
 	},
 	{
+		test: /\.s?css$/,
+		use: styleRules
+	},
+	{
 		test: /\.vue$/,
 		exclude: function(path){return path.match(/node_modules/);},
 		use: {
 			loader: 'vue-loader',
 			options: {
 				extractCSS: true
+				// cssModules: {
+				// 	localIdentName: '[path][name]---[local]---[hash:base64:5]',
+				// 	camelCase: true
+				// }
 			}
 		}
-	},
-	{
-		test: /\.s?css$/,
-		use: styleRules
 	}
 ];
 let plugins = [
@@ -90,7 +96,10 @@ let plugins = [
 		title: 'es6+vue+webpack',
 		template: path.join(APP_PATH.MAIN, 'index.html')
 	}),
-	new ExtractTextWebpackPlugin('./styles.css'),
+	//提取的css文件名，不要写死，否则vue组件提取出的样式会与purecss的样式冲突。
+	//用变量可以生成对应的css文件，即项目css文件(包括vue组件提取的样式，开发者写的独立css/scss文件)会被提取到一个css文件；
+	//purecss的样式会被作为公共代码提取到一个css文件
+	new ExtractTextWebpackPlugin('./[name]-[chunkhash:8].css'), 
 	new CommonsChunkPlugin({
 		name: 'vendor',
 		minChunks: (module)=>{return module.context&&/node_modules/.test(module.context);}
