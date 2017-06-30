@@ -1,1 +1,98 @@
 //es6+vue.js+purecss+webpack
+
+webpack
+webpack-dev-server
+html-webpack-plugin
+extract-text-webpack-plugin
+
+babel-loader
+babel-core
+
+css-loader
+style-loader
+sass-loader
+node-sass
+
+vue
+vue-loader
+vue-template-compiler 针对单文件组件的vue模板编译器
+nodemon
+
+
+
+
+
+
+//TODO: 1. 安装webpack，webpack-dev-server，nodemon
+	1). webpack.config.js的导出改为函数，此函数接受一个参数，根据此参数切换production和development模式。
+		module.exports = function (env) {
+			if(env===ENV.DEVELOPMENT){
+				return createDevelopmentConfig();
+			}
+			return createProductionConfig();
+		}
+	2). 修改package.json的scripts块，从npm运行相关build命令，如：
+		"build:dev": "nodemon --watch webpack.config.js --exec \"webpack-dev-server --env development\""
+		"build:prod": "webpack --env production"
+//TODO: 2. 处理production版本时，uglifyJS插件报错
+	1). 安装babel-preset-es2015, 开发依赖
+	2). 修改babel-loader的配置如下：
+		{
+			test: /\.js$/,
+			exclude: function(path){return path.match(/node_modules/);},
+			use: {
+				loader: 'babel-loader',
+				options:{
+					presets:['es2015']
+				}
+			}
+		}
+		配置presets:['es2015']后，还是报错，但单纯的es6项目，不用vue时进行压缩是可以的。
+	3). 创建babel配置文件.babelrc, 添加如下内容，如:
+		{
+			"presets":["es2015"],
+			"comments": false
+		}
+//TODO: 3. 提取css(有scss)
+	1). 安装css-loader，style-loader，saas-loader，node-sass
+	2). 增加处理css、scss文件的处理规则，如：
+		{
+			test: /\.s?css$/,
+			use: ExtractTextWebpackPlugin.extract({
+				fallback: 'style-loader',
+				use: [
+					{
+						loader: 'css-loader',
+						options: {
+							modules: true
+						}
+					},
+					'sass-loader'
+				]
+			})
+		}
+		此规则只能处理通过import语句导入的css、scss文件，但无法处理vue组件中style标签中的css、scss代码。
+	3). 修改vue-loader的配置，如下：
+		{
+			test: /\.vue$/,
+			exclude: function(path){return path.match(/node_modules/);},
+			use: {
+				loader: 'vue-loader',
+				options: {
+					extractCSS: true //此处须用extractCSS
+				}
+			}
+		}
+//TODO: 4. 提取公共库
+	1). 在plugins中增加CommonsChunkPlugin插件，如：
+		new CommonsChunkPlugin({
+			name: 'vendor',
+			minChunks: (module)=>{return module.context&&/node_modules/.test(module.context);}
+		})
+//TODO: 4. 使用purecss
+//TODO: 5. 使用awsomefonts
+
+
+
+	
+	
