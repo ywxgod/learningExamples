@@ -3,6 +3,7 @@
 webpack
 webpack-dev-server
 html-webpack-plugin
+purifycss-webpack
 extract-text-webpack-plugin
 
 babel-loader
@@ -13,10 +14,17 @@ style-loader
 sass-loader
 node-sass
 
+url-loader
+file-loader
+font-awesome
+
 vue
 vue-loader
 vue-template-compiler 针对单文件组件的vue模板编译器
-purecss 
+purecss
+purify-css
+glob
+
 nodemon
 
 
@@ -106,8 +114,27 @@ nodemon
 	3). 通过 import 'purecss'; 导入purecss, 然后在vue文件的template标签中使用purecss提供的各种样式
 
 //TODO: 5. 删除css框架(purecss)中没有用到的样式，以减少最后的css文件大小。
-
+	1). 安装glob，purify-css，purifycss-webpack --save-dev
+	2). 将purifycss-webpack插件添加到plugins数组，且必须放置于ExtractTextWebpack插件后面。
+		删除无用的css会应用在提取css之后。
+		new PurifycssWebpackPlugin({
+			paths: glob.sync(`${APP_PATH.MAIN}/**/*.vue`,{nodir:true})
+		})
 //TODO: 6. 使用awsomefonts
+	1). 安装font-awesome: npm install font-awesome -S
+	2). 安装file-loader: npm install file-loader -D
+	3). 添加alias：fontAwesome -> font-awesome/css/font-awesome.css
+	4). 添加file-loader到rules：
+		{
+			test: /\.(svg|eot|ttf|woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
+			use: {
+				loader: 'file-loader',
+				options:{
+					name: './fonts/[name]-[hash:8].[ext]'
+				}
+			}
+		}
+	5). 通过import 'fontAwesome'导入字体图标
 
 
 

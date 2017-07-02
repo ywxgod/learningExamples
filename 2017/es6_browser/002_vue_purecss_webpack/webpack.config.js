@@ -1,7 +1,9 @@
 const path = require('path');
+const glob = require('glob');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
+const PurifycssWebpackPlugin = require('purifycss-webpack');
 const CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
 const LoaderOptionsPlugin = webpack.LoaderOptionsPlugin;
 const UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
@@ -14,7 +16,9 @@ const APP_PATH = {
 	MAIN: path.join(__dirname,'src/app'),
 	BUILD: path.join(__dirname, 'dist'),
 	VUE_DEVELOPMENT: 'vue/dist/vue.common.js',
-	VUE_PRODUCTION: 'vue/dist/vue.min.js'
+	VUE_PRODUCTION: 'vue/dist/vue.min.js',
+	AWEFONT_DEVELOPMENT: 'font-awesome/css/font-awesome.css',
+	AWEFONT_PRODUCTION: 'font-awesome/css/font-awesome.min.css'
 }
 const styleRules = ExtractTextWebpackPlugin.extract({
 	fallback: 'style-loader',
@@ -77,6 +81,15 @@ let rules = [
 		use: styleRules
 	},
 	{
+		test: /\.(svg|eot|ttf|woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
+		use: {
+			loader: 'file-loader',
+			options:{
+				name: './fonts/[name]-[hash:8].[ext]'
+			}
+		}
+	},
+	{
 		test: /\.vue$/,
 		exclude: function(path){return path.match(/node_modules/);},
 		use: {
@@ -103,11 +116,15 @@ let plugins = [
 	new CommonsChunkPlugin({
 		name: 'vendor',
 		minChunks: (module)=>{return module.context&&/node_modules/.test(module.context);}
+	}),
+	new PurifycssWebpackPlugin({
+		paths: glob.sync(`${APP_PATH.MAIN}/**/*.vue`,{nodir:true})
 	})
 ];
 let resolve = {
 	alias:{
-		vue: APP_PATH.VUE_DEVELOPMENT //vue is initialized by development version default.
+		vue: APP_PATH.VUE_DEVELOPMENT, //vue is initialized by development version default.
+		fontAwesome: APP_PATH.AWEFONT_DEVELOPMENT
 	}
 }
 //////////////////////////////////////////////////////////////////
@@ -169,6 +186,7 @@ module.exports = function (env) {
 
 	//use vue development version or production version
 	resolve.alias.vue = isDevelopment()?APP_PATH.VUE_DEVELOPMENT:APP_PATH.VUE_PRODUCTION;
+	resolve.alias.fontAwesome = isDevelopment()?APP_PATH.AWEFONT_DEVELOPMENT:APP_PATH.AWEFONT_PRODUCTION;
 
 	if(env===ENV.DEVELOPMENT){
 		return createDevelopmentConfig();

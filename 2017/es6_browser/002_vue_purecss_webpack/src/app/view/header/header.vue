@@ -1,6 +1,6 @@
 <template>
 	<div class="header">
-		{{label}}
+		{{label}} <span class="fa fa-address-book"></span>
 	</div>
 </template>
 <style scoped lang="scss">

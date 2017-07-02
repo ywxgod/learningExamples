@@ -2,6 +2,7 @@ import { UrlUtil } from './utils/UrlUtil';
 import AppMain from './main/app_main.vue';
 import Vue from 'vue';
 import 'purecss';
+import 'fontAwesome';
 
 let userId = UrlUtil.getUrlQueryByName('userId');
 let flag = UrlUtil.getUrlQueryByName('flag');
