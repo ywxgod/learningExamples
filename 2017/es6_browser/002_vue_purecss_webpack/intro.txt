@@ -3,8 +3,8 @@
 webpack
 webpack-dev-server
 html-webpack-plugin
-purifycss-webpack
 extract-text-webpack-plugin
+purifycss-webpack purifycss的webpack插件，用于删除无用的css，需放到extract-text-webpack-plugin插件后面使用
 
 babel-loader
 babel-core
@@ -16,20 +16,16 @@ node-sass
 
 url-loader
 file-loader
-font-awesome
+font-awesome 提供字体，图标等
 
 vue
 vue-loader
 vue-template-compiler 针对单文件组件的vue模板编译器
-purecss
-purify-css
-glob
+purecss css框架
+purify-css 用于处理无用的css
+glob purify-css依赖
 
 nodemon
-
-
-
-
 
 
 //TODO: 1. 安装webpack，webpack-dev-server，nodemon

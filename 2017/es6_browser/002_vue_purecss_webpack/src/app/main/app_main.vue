@@ -7,8 +7,8 @@
 </template>
 <style lang="scss">
 
-
 </style>
+
 <script>
 
 	import HeaderView from '../view/header/header.vue';
