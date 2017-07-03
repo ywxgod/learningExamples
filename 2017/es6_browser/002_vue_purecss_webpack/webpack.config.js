@@ -174,9 +174,8 @@ function createProductionConfig(){
 	);
 	return {
 		entry,output,
-		resolve,
-		devServer,plugins,
-		devtool: 'sourcemap',
+		resolve,plugins,
+		//devtool: 'sourcemap',
 		module:{rules}
 	};
 }
