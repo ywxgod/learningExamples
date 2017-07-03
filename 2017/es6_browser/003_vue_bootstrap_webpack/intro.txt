@@ -1,1 +1,23 @@
 //es6+vue.js+bootstrap+webpack
+
+webpack
+webpack-dev-server
+nodemon
+
+babel-core
+babel-preset-es2015
+babel-loader
+
+style-loader
+css-loader
+sass-loader
+node-sass
+
+vue
+vue-loader
+vue-template-compiler
+
+html-webpack-plugin
+
+
+//TODO: 1. 安装webpack, webpack-dev-server, nodemon
