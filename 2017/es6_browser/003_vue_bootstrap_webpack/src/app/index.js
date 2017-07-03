@@ -2,6 +2,9 @@ import Vue from 'vue';
 import AppMain from './main/app_main.vue';
 import {ObjUtil} from './utils/ObjUtil';
 
+import 'bootstrapCss';
+import 'bootstrapJs';
+
 let symbolA = Symbol('Symbol A');
 let symbolB = Symbol('Symbol B');
 let obj = {[symbolA]:'haha',[symbolB]:'hehe',a:1,b:2,c:3};
@@ -11,6 +14,7 @@ let names = ObjUtil.getOwnPropertyNames(obj);
 console.log(names);
 let symbols = ObjUtil.getOwnPropertySymbols(obj);
 console.log(symbols);
+console.log($);
 
 let app = new Vue({
 	el: '#app',
