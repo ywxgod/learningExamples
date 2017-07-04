@@ -61,3 +61,7 @@ jquery
         }
         如果不覆盖publicPath，所有字体的查找路径将会是./dist/styles/fonts/[name].[ext],而实际的字体文件
         路径是./dist/fonts/[name].[ext].
+//TODO: 3. 删除未用到的css
+	//使用purifycss插件会导致bootstrap的JavaScript component失效
+	//仅仅测试过dropdown-menu组件，具体可以参考header.vue
+	//github上面也有相应的报告：https://github.com/purifycss/purifycss/issues/135

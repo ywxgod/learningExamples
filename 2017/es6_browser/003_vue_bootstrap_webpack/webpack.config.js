@@ -2,6 +2,8 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
+const PurifycssWebpackPlugin = require('purifycss-webpack');
+const glob = require('glob-all');
 const LoaderOptionsPlugin = webpack.LoaderOptionsPlugin;
 const UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 const CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
@@ -118,6 +120,16 @@ let plugins = [
 	new ExtractTextWebpackPlugin({
 		filename: './styles/[name]-[hash:8].css'
 	}),
+	//使用purifycss插件会导致bootstrap的JavaScript component失效
+	//仅仅测试过dropdown-menu组件，具体可以参考header.vue
+	//github上面也有相应的报告：https://github.com/purifycss/purifycss/issues/135
+	// new PurifycssWebpackPlugin({
+	// 	paths: glob.sync([
+	// 		`${PATHS.MAIN}/**/*.js`,
+	// 		`${PATHS.MAIN}/**/*.vue`
+	// 	]),
+	// 	purifyOptions: {info: true, minify:true}
+	// }),
 	new CommonsChunkPlugin({
 		name: 'vendor',
 		minChunks: (module)=>{return module.context&&/node_modules/.test(module.context);}

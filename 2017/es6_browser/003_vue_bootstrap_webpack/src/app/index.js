@@ -14,7 +14,6 @@ let names = ObjUtil.getOwnPropertyNames(obj);
 console.log(names);
 let symbols = ObjUtil.getOwnPropertySymbols(obj);
 console.log(symbols);
-console.log($);
 
 let app = new Vue({
 	el: '#app',
