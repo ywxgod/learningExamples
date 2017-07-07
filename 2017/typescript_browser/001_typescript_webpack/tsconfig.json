@@ -4,7 +4,12 @@
 		"module": "amd",
 		"outDir": "./dist",
 		"rootDir": "./src",
+		"sourceMap": true,
 		"noImplicitAny": true,
 		"removeComments": true
-	}
+	},
+	"exclude": [
+		"node_modules",
+		"dist"
+	]
 }

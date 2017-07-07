@@ -1,0 +1,23 @@
+{
+  "name": "001_typescript_webpack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "shx rm -rf dist",
+    "build:dev": "nodemon --watch webpack.config.js --exec \"webpack-dev-server --env development\"",
+    "build:prod": "clean && wepack --env production && http-server"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "html-webpack-plugin": "^2.29.0",
+    "nodemon": "^1.11.0",
+    "shx": "^0.2.2",
+    "typescript": "^2.4.1",
+    "webpack": "^3.1.0",
+    "webpack-dev-server": "^2.5.0"
+  }
+}
