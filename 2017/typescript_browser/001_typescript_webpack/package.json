@@ -17,9 +17,14 @@
     "html-webpack-plugin": "^2.29.0",
     "nodemon": "^1.11.0",
     "shx": "^0.2.2",
-    "ts-loader": "^2.2.2",
     "typescript": "^2.4.1",
     "webpack": "^3.1.0",
     "webpack-dev-server": "^2.5.1"
+  },
+  "dependencies": {
+    "@types/jquery": "^3.2.6",
+    "@types/lodash": "^4.14.68",
+    "jquery": "^3.2.1",
+    "lodash": "^4.17.4"
   }
 }

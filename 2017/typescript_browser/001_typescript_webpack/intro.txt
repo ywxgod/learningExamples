@@ -1,12 +1,17 @@
 //typescript+webpack
 
+jquery
+@types/jquery
+lodash
+@types/lodash
+
 typescript
 awesome-typescript-loader
 webpack
 webpack-dev-server
 html-webpack-plugin
 nodemon
-
+shx
 
 
 
@@ -14,5 +19,9 @@ nodemon
 1.	安装typescript,webpack,webpack-dev-server,nodemon
 	install typescript webpack webpack-dev-server nodemon -D
 2.	修改package.json,增加如下两个命令：
+	"clean": "rm -rf dist"
 	"build:dev": "nodemon --watch webpack.config.js --exec \"webpack-dev-server --env development\""
-	"build:prod": "clean && wepack --env production && http-server"
+	"build:prod": "npm run clean && wepack --env production && http-server"
+3.	导入jquery用：import * as $ from 'jquery';
+	而在es6的项目中却是：import $ from 'jquery';
+	lodash同理。

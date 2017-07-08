@@ -61,7 +61,12 @@ let plugins = [
 		template: path.join(APP_PATH.MAIN, 'index.html')
 	})
 ];
-let resolve = {alias:{},extensions:['.ts','.js']};
+let resolve = {
+	alias:{
+		//jquery: 'jquery/dist/jquery'
+	},
+	extensions:['.ts','.js']
+};
 /////////////////////////////////////////////////////////////////////
 //config end
 /////////////////////////////////////////////////////////////////////
