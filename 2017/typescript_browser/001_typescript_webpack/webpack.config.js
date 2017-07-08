@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CheckerPlugin  } = require('awesome-typescript-loader');
 
 
 const ENV = {
@@ -44,11 +45,17 @@ let entry = {
 };
 let output = {
 	filename: '[name]-[chunkhash:8].js',
-	path: path.join(__dirname, APP_PATH.BUILD),
+	path: APP_PATH.BUILD,
 	chunkFilename: '[name].[ext]'
 };
-let rules = [];
+let rules = [
+	{
+		test: /\.ts$/,
+		loader: 'awesome-typescript-loader'
+	}
+];
 let plugins = [
+	new CheckerPlugin(),
 	new HtmlWebpackPlugin({
 		title: 'typescript+webpack',
 		template: path.join(APP_PATH.MAIN, 'index.html')

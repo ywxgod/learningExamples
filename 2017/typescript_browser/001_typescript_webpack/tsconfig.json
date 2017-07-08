@@ -3,10 +3,13 @@
 		"target": "es5",
 		"module": "amd",
 		"outDir": "./dist",
-		"rootDir": "./src",
 		"sourceMap": true,
 		"noImplicitAny": true,
-		"removeComments": true
+		"removeComments": true,
+		"allowJs": true,
+		"lib": [
+			"es2015","dom"			
+		]
 	},
 	"exclude": [
 		"node_modules",

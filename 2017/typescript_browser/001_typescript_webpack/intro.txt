@@ -1,8 +1,10 @@
 //typescript+webpack
 
 typescript
+awesome-typescript-loader
 webpack
 webpack-dev-server
+html-webpack-plugin
 nodemon
 
 
@@ -13,4 +15,4 @@ nodemon
 	install typescript webpack webpack-dev-server nodemon -D
 2.	修改package.json,增加如下两个命令：
 	"build:dev": "nodemon --watch webpack.config.js --exec \"webpack-dev-server --env development\""
-	"build:prod": "webpack --env production"
+	"build:prod": "clean && wepack --env production && http-server"
