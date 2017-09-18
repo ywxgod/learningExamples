@@ -1,6 +1,6 @@
 Some es6 class utils.
 <br/>
-[Github](https://github.com/ywxgod/learningExamples/tree/master/2017/vue-mec)
+### [vue-mec](https://github.com/ywxgod/learningExamples/tree/master/2017/vue-mec) in github.
 <br/>
 
 <b>EventBus</b> - singleton event bus class.
