@@ -1,29 +1,42 @@
 Some es6 class utils.
+<br/>
 
-EventBus - singleton event bus class.
-EventDispatcher - a class responsible for dispatch or listen to events.
-AjaxService - a class call axios to send ajax requests.
-BaseCommand - a base class to do a task.
-AjaxCommand - extends to the BaseCommand
+<b>EventBus</b> - singleton event bus class.
+<br/>
+<b>EventDispatcher</b> - a class responsible for dispatch or listen to events.
+<br/>
+<b>AjaxService</b> - a class call axios to send ajax requests.
+<br/>
+<b>BaseCommand</b> - a base class to do a task.
+<br/>
+<b>AjaxCommand</b> - extends to the BaseCommand
+<br/>
 
 event - event dispatcher base on vue.
+<br/>
 baseController - controller adapte for vue.
+<br/>
 
 Usage:
 
+```bash
 npm install vue-mec
 
 import {event,baseController} from 'vue-mec';
 import {AjaxCommand,AjaxService} from 'vue-mec';
+```
 
 or
 
+```bash
 import * as mec from 'vue-mec';
+```
 
 examples:
 
-App.vue
+<b>App.vue</b>
 
+```bash
 <script>
     import Hello from './components/Hello'
     import {appCtrl} from './AppCtrl';
@@ -39,9 +52,11 @@ App.vue
         }
     }
 </script>
+```
 
-GetDataCommand.js
+<b>GetDataCommand.js</b>
 
+```bash
 import {AjaxCommand,AjaxService} from 'vue-mec';
 
 export class GetDataCommand extends AjaxCommand{
@@ -67,9 +82,11 @@ export class GetDataCommand extends AjaxCommand{
     }
 
 }
+```
 
-AppCtrl.js
+<b>AppCtrl.js</b>
 
+```bash
 import {GetDataCommand} from './GetDataCommand';
 
 export let appCtrl = {
@@ -81,9 +98,11 @@ export let appCtrl = {
 
     }
 }
+```
 
-Hello.vue
+<b>Hello.vue</b>
 
+```bash
 <script>
 
     import {baseController,event} from 'vue-mec';
@@ -103,11 +122,12 @@ Hello.vue
         }
     }
 </script>
+```
 
-
-description:
-
-mixins event in your vue component
-mixins baseController in your vue component
-we can write a command class extends from AjaxCommand or BaseCommand
+<p>
+<b>description:</b>
+<p>
+mixins event in your vue component<br/>
+mixins baseController in your vue component<br/>
+we can write a command class extends from AjaxCommand or BaseCommand<br/>
 execute methods in command will be called defaultly.
