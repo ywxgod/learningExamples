@@ -2,22 +2,22 @@
   <div id="app">
     <img src="./assets/logo.png">
     <hello></hello>
+    <div>{{a}}-{{b}}</div>
+    <div>{{xx}}-{{yy}}</div>
   </div>
 </template>
 
 <script>
 import Hello from './components/Hello'
-import {appCtrl} from './AppCtrl';
-import {event,baseController} from 'vue-mec';
+import { AppCtrl } from './AppCtrl';
 export default {
-  name: 'app',
-  mixins:[appCtrl,event,baseController],
-  components: {
-    Hello
-  },
-  mounted(){
-
-  }
+	name: 'app',
+	components: {
+		Hello
+	},
+	beforeCreate() {
+		new AppCtrl(this)
+	}
 }
 </script>
 

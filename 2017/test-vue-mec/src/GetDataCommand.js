@@ -8,13 +8,13 @@ export class GetDataCommand extends AjaxCommand{
     }
 
     execute(){
-        console.log(arguments);
+        //console.log(arguments);
         let url = 'https://jsonplaceholder.typicode.com/posts';
         this._service.send(url);
     }
 
     success(data,response){
-        console.log(data,response);
+        //console.log(data,response);
     }
 
     fail(error){

@@ -22,20 +22,15 @@
 
 <script>
 
-import * as mec from 'vue-mec';
-
 export default {
   name: 'hello',
-  mixins:[mec.baseController,mec.event],
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
     }
   },
   mounted(){
-    setTimeout(()=>{
-      this.emit('abc', 1,2,3,4);
-    },3000)
+    
   }
 }
 </script>
