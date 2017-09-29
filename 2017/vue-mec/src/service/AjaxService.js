@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 
 let methods = ['get','post','delete','put'];
 
-export class AjaxService extends BaseService{
+class AjaxService extends BaseService{
 
     static get defaults() {
         return {
@@ -38,3 +38,5 @@ export class AjaxService extends BaseService{
 
 
 }
+
+export {AjaxService};

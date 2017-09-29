@@ -1,17 +1,23 @@
-import {baseController} from './src/controller/baseController';
-import {event} from './src/event/event';
+import {BaseController} from './src/controller/BaseController';
+import {BaseMediator} from './src/controller/BaseMediator';
+import {EventDispatcher} from './src/event/EventDispatcher';
 import {EventBus} from './src/event/EventBus';
-import {BaseMode} from './src/model/BaseModel';
+import {BaseModel} from './src/model/BaseModel';
 import {AjaxCommand} from './src/service/AjaxCommand';
 import {AjaxService} from './src/service/AjaxService';
 import {BaseCommand} from './src/service/BaseCommand';
+import {IDUtil} from './src/utils/IDUtil';
+import {FunUtil} from './src/utils/FunUtil';
 
 export {
-    baseController,
-    event,
+    BaseController,
+    BaseMediator,
+    EventDispatcher,
     EventBus,
-    BaseMode,
+    BaseModel,
     AjaxCommand,
     AjaxService,
-    BaseCommand
+    BaseCommand,
+    IDUtil,
+    FunUtil
 }

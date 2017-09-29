@@ -1,6 +1,6 @@
 {
   "name": "vue-mec",
-  "version": "1.2.1",
+  "version": "1.2.13",
   "description": "event bus and command ajax base on vue",
   "main": "dist/vue-mec.js",
   "scripts": {
@@ -19,6 +19,7 @@
     "babel-loader": "^7.1.2",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
+    "uglifyjs-webpack-plugin": "^0.4.6",
     "webpack": "^3.5.6"
   }
 }

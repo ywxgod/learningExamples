@@ -1,21 +1,21 @@
-export class EventDispatcher{
+import {IDUtil} from '../utils/IDUtil';
 
-    static _eId = Date.now();
+export class EventDispatcher{
 
     constructor(){
         this._evts = {};
     }
 
-    on(type, handler, ...data){
+    $on(type, handler, ...data){
         if(typeof handler !== 'function'){
             throw new Error('expects handler as a function.');
         }
-        let eId = EventDispatcher._eId++;
+        let eId = IDUtil.uuid;
         this._evts[eId] = {type,handler,data};
         return eId;
     }
 
-    off(eId){
+    $off(eId){
         if(!eId) {return false;}
         if(this._evts[eId]){
             this._evts[eId] = null;
@@ -24,8 +24,8 @@ export class EventDispatcher{
         return false;
     }
 
-    emit(type, ...payloads){
-        let eInfos = this._getEventInfosByType(type);
+    $emit(type, ...payloads){
+        let eInfos = this.$getEventInfosByType(type);
         let n = eInfos.length;
         for(let i=0;i<n;i++){
             let {handler,data} = eInfos[i];
@@ -34,12 +34,12 @@ export class EventDispatcher{
         }
     }
 
-    hasEvent(type){
-        let eInfos = this._getEventInfosByType(type);
+    $hasEvent(type){
+        let eInfos = this.$getEventInfosByType(type);
         return !!eInfos.length;
     }
 
-    _getEventInfosByType(type){
+    $getEventInfosByType(type){
         let infos = [];
         for(let eId in this._evts){
             if(this._evts.hasOwnProperty(eId)){

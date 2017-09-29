@@ -1,6 +1,6 @@
 import {EventDispatcher} from './EventDispatcher';
 
-export class EventBus extends EventDispatcher{
+class EventBus extends EventDispatcher{
 
     static _instance = null;
     
@@ -15,3 +15,5 @@ export class EventBus extends EventDispatcher{
 
 
 }
+
+export {EventBus}
