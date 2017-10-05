@@ -1,4 +1,5 @@
 import {IDUtil} from '../utils/IDUtil';
+import {BaseCommand} from '../service/BaseCommand';
 
 export class EventDispatcher{
 
@@ -29,8 +30,13 @@ export class EventDispatcher{
         let n = eInfos.length;
         for(let i=0;i<n;i++){
             let {handler,data} = eInfos[i];
-            let args = [...data, ...payloads];
-            handler(...args);
+			if(handler.prototype instanceof BaseCommand){
+				let cmd = new handler(payloads.shift());
+				cmd.execute.apply(cmd, [...payloads]);
+			}else{
+				let args = [...data, ...payloads];
+				handler(...args);
+			}
         }
     }
 

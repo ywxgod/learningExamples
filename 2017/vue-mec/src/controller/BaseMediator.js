@@ -3,7 +3,7 @@ import {EventBus} from '../event/EventBus';
 import {IDUtil} from '../utils/IDUtil';
 import {BaseCommand} from '../service/BaseCommand';
 
-class BaseMediator extends BaseController{
+export class BaseMediator extends BaseController{
 
     constructor(){
         super(...arguments);
@@ -23,7 +23,7 @@ class BaseMediator extends BaseController{
         return cmd.execute.apply(cmd, [...params]);
     }
 
-    dispatchEvent(target,eType,...data){
+    dispatch(target,eType,...data){
         if(!target){
             target = EventBus.getInstance();
         }
@@ -66,16 +66,11 @@ class BaseMediator extends BaseController{
         this._evts = {};
     }
 
-    beforeDestroy(){
-        this.clearListeners();
-    }
-
-    destroyed(){
-        this.vm = null;
+    destroy(){
+		super.destroy();
+		this.clearListeners();
     }
 
 
 
 }
-
-export {BaseMediator};
