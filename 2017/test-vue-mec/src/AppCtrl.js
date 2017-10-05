@@ -1,21 +1,28 @@
+import {BaseMediator}  from 'vue-mec';
 import {GetDataCommand} from './GetDataCommand';
-import * as VueMec from 'vue-mec';
 
-class AppCtrl extends VueMec.BaseMediator{
+export class AppCtrl extends BaseMediator{
 
     mounted(){
         this.addListener(false,'abc', (a,b,c,d,e,f,g)=>{
             console.log(a,b,c,d,e,f,g);
         },1,3,4)
-        this.executeCommand(GetDataCommand,1,2,3,4);
-        this.dispatchEvent(false,'abc',6,7,8);
+        this.dispatch(false,'abc',6,7,8);
 
-        this.vm.a = 'aaaa';
+		this.vm.a = 'aaaa';
+		
+		this.addListener(false,'xxxx', GetDataCommand);
+
+		this.dispatch(false,'xxxx',11,22,33);
     }
 
-    beforeCreate(){
-        console.log(this.vm);
-    }
+    beforeCreate(vm){
+        console.log(vm);
+	}
+	
+	onClick(vm,e){
+		console.log(vm,e);
+	}
 
     data(){
         return {
@@ -27,14 +34,6 @@ class AppCtrl extends VueMec.BaseMediator{
         return {
             xx(){
                 return this.vm.a+this.vm.b;
-            },
-            yy:{
-                get:()=>{
-                    return 'yy'
-                },
-                set:(val)=>{
-                    this.vm.a = 100;
-                }
             }
         }
     }
@@ -45,7 +44,10 @@ class AppCtrl extends VueMec.BaseMediator{
                 console.log(newv,'a');
             }
         }
-    }
+	}
+	
+	destroy(){
+
+	}
 }
 
-export {AppCtrl};

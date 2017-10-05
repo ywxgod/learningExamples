@@ -1,9 +1,7 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <hello></hello>
     <div>{{a}}-{{b}}</div>
-    <div>{{xx}}-{{yy}}</div>
+    <div @click="onClick">{{xx}}</div>
   </div>
 </template>
 
