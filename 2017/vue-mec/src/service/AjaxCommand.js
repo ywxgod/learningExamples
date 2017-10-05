@@ -1,6 +1,6 @@
 import {BaseCommand} from './BaseCommand';
 
-class AjaxCommand extends BaseCommand{
+export class AjaxCommand extends BaseCommand{
 
     constructor(cbObj){
         super();
@@ -38,5 +38,3 @@ class AjaxCommand extends BaseCommand{
 
 
 }
-
-export {AjaxCommand};

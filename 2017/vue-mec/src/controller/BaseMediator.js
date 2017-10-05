@@ -27,7 +27,7 @@ export class BaseMediator extends BaseController{
         if(!target){
             target = EventBus.getInstance();
         }
-        if(!target.$emit){
+        if(typeof target.$emit !== 'function'){
             throw new Error('target must extends EventDispatcher or an instance of Vue');
         }
         target.$emit(eType, ...data);
@@ -36,8 +36,8 @@ export class BaseMediator extends BaseController{
     addListener(target,eType,callback,...data){
         if(!target){
             target = EventBus.getInstance();
-        }
-        if(!target.$on){
+		}
+        if(typeof target.$on !== 'function'){
             throw new Event(`target must extends EventDispatcher or an instance of Vue`)
         }
         let eId = target.$on(eType,callback,...data);

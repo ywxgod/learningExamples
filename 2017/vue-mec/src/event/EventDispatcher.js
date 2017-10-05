@@ -11,7 +11,7 @@ export class EventDispatcher{
         if(typeof handler !== 'function'){
             throw new Error('expects handler as a function.');
         }
-        let eId = IDUtil.uuid;
+        let eId = IDUtil.uuid();
         this._evts[eId] = {type,handler,data};
         return eId;
     }

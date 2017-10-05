@@ -6,8 +6,8 @@ export class BaseCommand{
 
     }
 
-    dispatchEvent(eType,...rest){
-        EventBus.getInstance().emit(eType,...rest);
+    dispatch(eType,...rest){
+        EventBus.getInstance().$emit(eType,...rest);
     }
 
 }

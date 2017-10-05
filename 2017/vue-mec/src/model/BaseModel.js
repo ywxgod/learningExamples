@@ -5,8 +5,8 @@ export class BaseModel{
         this.evtBus = EventBus.getInstance();        
     }
 
-    dispatchEvent(eType,...rest){
-        this.evtBus.emit(eType,...rest);
+    dispatch(eType,...rest){
+        this.evtBus.$emit(eType,...rest);
     }
 
     reset(){
