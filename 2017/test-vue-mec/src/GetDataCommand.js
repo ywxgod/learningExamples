@@ -1,5 +1,6 @@
 import {AjaxCommand,AjaxService} from 'vue-mec';
-
+//import {AjaxCommand} from './libs/service/AjaxCommand';
+//import {AjaxService} from './libs/service/AjaxService';
 export class GetDataCommand extends AjaxCommand{
 
     constructor(){
@@ -14,7 +15,7 @@ export class GetDataCommand extends AjaxCommand{
     }
 
     success(data,response){
-    	console.log(data,response);
+		this.dispatch('haha',data);
     }
 
     fail(error){
