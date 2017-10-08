@@ -84,10 +84,10 @@ export class BaseController{
 	}
 
 	destroy(){
-		let index = this.vm._$ctrls.findIndex(this);
+        if(!this.vm) {return;}
+        let index = this.vm._$ctrls.findIndex(i=>i==this);
 		this.vm._$ctrls.splice(index,1);
 		this.vm.$nextTick(()=>{
-			this.vm._$ctrls = null;
 			this.vm = null;
 			this.opt = null;
 		});

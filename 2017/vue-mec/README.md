@@ -1,6 +1,7 @@
 Some es6 class utils.
 <br/>
 ### [vue-mec](https://github.com/ywxgod/learningExamples/tree/master/2017/vue-mec) in github.
+### [test-vue-mec](https://github.com/ywxgod/learningExamples/tree/master/2017/test-vue-mec) in github.
 <br/>
 
 <b>EventBus</b> - singleton event bus class.
@@ -13,10 +14,9 @@ Some es6 class utils.
 <br/>
 <b>AjaxCommand</b> - extends to the BaseCommand
 <br/>
-
-event - event dispatcher base on vue.
+<b>BaseController</b> - a base controller class for vue component
 <br/>
-baseController - controller adapte for vue.
+<b>BaseMediator</b> - extends from BaseController.
 <br/>
 
 Usage:
@@ -24,7 +24,7 @@ Usage:
 ```bash
 npm install vue-mec
 
-import {event,baseController} from 'vue-mec';
+import {BaseMediator} from 'vue-mec';
 import {AjaxCommand,AjaxService} from 'vue-mec';
 ```
 
@@ -40,17 +40,14 @@ examples:
 
 ```bash
 <script>
-    import Hello from './components/Hello'
-    import {appCtrl} from './AppCtrl';
-    import {event,baseController} from 'vue-mec';
+    import { AppCtrl } from './AppCtrl';
     export default {
         name: 'app',
-        mixins:[appCtrl,event,baseController],
         components: {
             Hello
         },
-        mounted(){
-
+        beforeCreate() {
+            new AppCtrl(this)
         }
     }
 </script>
@@ -64,7 +61,7 @@ import {AjaxCommand,AjaxService} from 'vue-mec';
 export class GetDataCommand extends AjaxCommand{
 
     constructor(){
-        super();
+        super(...arguments);
         this._service = new AjaxService(this);
     }
 
@@ -75,7 +72,7 @@ export class GetDataCommand extends AjaxCommand{
     }
 
     success(data,response){
-        console.log(data,response);
+		this.dispatch('haha',data);
     }
 
     fail(error){
@@ -89,47 +86,59 @@ export class GetDataCommand extends AjaxCommand{
 <b>AppCtrl.js</b>
 
 ```bash
+import {BaseMediator}  from 'vue-mec';
 import {GetDataCommand} from './GetDataCommand';
 
-export let appCtrl = {
+export class AppCtrl extends BaseMediator{
+
     mounted(){
-        this.on('abc', (a,b,c,d)=>{
-            console.log(a,b,c,d);
-        })
-        this.executeCommand(GetDataCommand,1,2,3,4);
-
+		
+		this.addListener(false,'xxxx', GetDataCommand);
+		this.addListener(false,'haha',(data)=>{
+			console.log(data);
+		});
+		console.log('mounted...');
+		this.dispatch(false,'xxxx',11,22,33);
     }
-}
-```
+	
+	onClick(vm,e){
+		console.log(vm,e);
+	}
 
-<b>Hello.vue</b>
-
-```bash
-<script>
-
-    import {baseController,event} from 'vue-mec';
-
-    export default {
-        name: 'hello',
-        mixins:[baseController,event],
-        data () {
-            return {
-            msg: 'Welcome to Your Vue.js App'
-            }
-        },
-        mounted(){
-            setTimeout(()=>{
-                this.emit('abc', 1,2,3,4);
-            },3000)
+    data(){
+        return {
+            a:1,b:2
         }
     }
-</script>
+
+    computed(){
+        return {
+            xx(){
+                return this.vm.a+this.vm.b;
+            }
+        }
+    }
+
+    watch(){
+        return {
+            a(newv,oldv){
+                console.log(newv,'a');
+            }
+        }
+	}
+	
+	destroy(){
+		super.destroy();
+		console.log('destroyed...');
+	}
+}
+
+
 ```
 
 <p>
 <b>description:</b>
 <p>
-mixins event in your vue component<br/>
-mixins baseController in your vue component<br/>
+
 we can write a command class extends from AjaxCommand or BaseCommand<br/>
 execute methods in command will be called defaultly.
