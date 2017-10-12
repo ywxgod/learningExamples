@@ -31,7 +31,7 @@ export class BaseController{
 
     _$initData(){
         if(FunUtil.isFun(this.data)){
-            this.opt.data = this.data.bind(this,this.vm);
+            this.opt.data = this.data.bind(this);
         }
     }
 
@@ -39,7 +39,7 @@ export class BaseController{
         if(FunUtil.isFun(this.watch)){
             this.opt.watch = this.watch();
             for(let i in this.opt.watch){
-                this.opt.watch[i] = this.opt.watch[i].bind(this,this.vm);
+                this.opt.watch[i] = this.opt.watch[i].bind(this);
             }
         }
 	}
@@ -51,7 +51,7 @@ export class BaseController{
 		if(!this.opt.methods) this.opt.methods = {};
 		names.forEach((name)=>{
 			if(reservedNames.indexOf(name)===-1){
-				this.opt.methods[name] = this[name].bind(this,this.vm);
+				this.opt.methods[name] = this[name].bind(this);
 			}
 		});
 	}
@@ -61,7 +61,7 @@ export class BaseController{
             this.opt.computed = this.computed();
             for(let i in this.opt.computed){
                 if(!FunUtil.isFun(this.opt.computed[i])) continue;
-                this.opt.computed[i] = this.opt.computed[i].bind(this,this.vm);
+                this.opt.computed[i] = this.opt.computed[i].bind(this);
             }
         }
     }
@@ -74,7 +74,7 @@ export class BaseController{
                 this.opt[funName] = [];
             }
             if(FunUtil.isFun(this[funName])){
-                this.opt[funName].push(this[funName].bind(this,this.vm));
+                this.opt[funName].push(this[funName].bind(this));
             }
         }
 	}

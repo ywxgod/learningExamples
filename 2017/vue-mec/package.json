@@ -1,6 +1,6 @@
 {
   "name": "vue-mec",
-  "version": "1.2.27",
+  "version": "1.2.28",
   "description": "event bus and command ajax base on vue",
   "main": "dist/vue-mec.js",
   "scripts": {
