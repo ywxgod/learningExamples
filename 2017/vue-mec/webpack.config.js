@@ -8,38 +8,29 @@ function createDevConfig(){
         output:{
             path: path.join(__dirname, 'dist'),
             filename: 'vue-mec.js',
-            library: 'mec',
             libraryTarget: 'umd'
         },
         module:{
             rules:[
                 {
                     test: /\.js$/,
-                    include: path.join(__dirname,'src'), 
-                    exclude: function(path){return path.match(/node_modules/);},
-                    use: {
-                        loader:'babel-loader',
-                        options:{
-                            presets: ['es2015','stage-0']
-                        }
-                    }
+                    exclude: /node_modules/,
+                    loader:'babel-loader'
                 }
             ]
         },
         devtool:'sourcemap',
         externals:{
-            lodash:{
-                commonjs: 'lodash',
-                commonjs2: 'lodash',
-                amd: 'lodash',
-                root: '_'
-            },
             axios:{
                 commonjs: 'axios',
                 commonjs2: 'axios',
                 amd: 'axios',
                 root: 'axios'
             }
+        },
+        resolve:{
+            
+            extensions:['.js']
         }
     }
 }
@@ -49,9 +40,10 @@ function createProdConfig(){
         entry: './index.js',
         output:{
             path: path.join(__dirname, 'dist'),
-            filename: 'vue-mec.js',
-            library: 'vue-mec',
-            libraryTarget: 'umd'
+            filename: 'vue-mec.min.js',
+            library: 'VueMec',
+            libraryTarget: 'umd',
+            umdNamedDefine: true
         },
         module:{
             rules:[
@@ -72,18 +64,12 @@ function createProdConfig(){
             new UglifyJSPlugin()
         ],
         externals:{
-            lodash:{
-                commonjs: 'lodash',
-                commonjs2: 'lodash',
-                amd: 'lodash',
-                root: '_'
-            },
-            axios:{
+            /* axios:{
                 commonjs: 'axios',
                 commonjs2: 'axios',
                 amd: 'axios',
                 root: 'axios'
-            }
+            } */
         }
     }
 }
@@ -91,7 +77,6 @@ function createProdConfig(){
 module.exports = function(env){
 	let config = createDevConfig();
 	if(env==='production'){
-        console.log('production');
 		config = createProdConfig();
 	}
 	return config;

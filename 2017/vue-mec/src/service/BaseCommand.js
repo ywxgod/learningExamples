@@ -6,7 +6,11 @@ export class BaseCommand{
 
     }
 
-    dispatch(eType,...rest){
+    showError(error){
+        
+    }
+
+    $callEvent(target, eType,...rest){
         EventBus.getInstance().$emit(eType,...rest);
     }
 

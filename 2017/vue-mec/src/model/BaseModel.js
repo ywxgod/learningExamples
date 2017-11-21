@@ -5,7 +5,7 @@ export class BaseModel{
         this.evtBus = EventBus.getInstance();        
     }
 
-    dispatch(eType,...rest){
+    $callEvent(eType,...rest){
         this.evtBus.$emit(eType,...rest);
     }
 

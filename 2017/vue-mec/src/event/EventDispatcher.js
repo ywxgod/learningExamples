@@ -3,6 +3,9 @@ import {BaseCommand} from '../service/BaseCommand';
 
 export class EventDispatcher{
 
+
+    static _count = 0;
+
     constructor(){
         this._evts = {};
     }
@@ -12,7 +15,8 @@ export class EventDispatcher{
             throw new Error('expects handler as a function.');
         }
         let eId = IDUtil.uuid();
-        this._evts[eId] = {type,handler,data};
+        let count = EventDispatcher._count++;
+        this._evts[eId] = {type,handler,data,count};
         return eId;
     }
 
@@ -30,13 +34,8 @@ export class EventDispatcher{
         let n = eInfos.length;
         for(let i=0;i<n;i++){
             let {handler,data} = eInfos[i];
-			if(handler.prototype instanceof BaseCommand){
-				let cmd = new handler(payloads.shift());
-				cmd.execute.apply(cmd, [...payloads]);
-			}else{
-				let args = [...data, ...payloads];
-				handler(...args);
-			}
+			let args = [...data, ...payloads];
+            handler(...args);
         }
     }
 
@@ -56,7 +55,7 @@ export class EventDispatcher{
             }
         }
         return infos.sort((info1,info2)=>{
-            return info1.eId - info2.eId;
+            return info1.count - info2.count;
         });
     }
 

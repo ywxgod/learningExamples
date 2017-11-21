@@ -1,38 +1,58 @@
 import {BaseService} from './BaseService';
-import * as axios from 'axios';
-import * as _ from 'lodash';
+import axios from 'axios';
 
 let methods = ['get','post','delete','put'];
 
 export class AjaxService extends BaseService{
 
-    static get defaults() {
-        return {
-            timeout: 30000
-        }
+    static _defaults = {
+        timeout: 3000
     };
+
+    static get defaults(){
+        return AjaxService._defaults;
+    };
+    static set defaults(value){
+        AjaxService._defaults = Object.assign(AjaxService._defaults, value);
+    }
 
     constructor(){
         super(...arguments);
-
-        this._axios = axios.create(_.cloneDeep(AjaxService.defaults));
+        this._axios = axios.create(Object.assign({},AjaxService.defaults));
     }
 
-    send(url,method='get',opts={data:{},params:{}}){
+    promise(url,method='get',opts={data:{},params:{}}){
         if(!~methods.indexOf(method)){
             throw new Error('invalid method '+ method);
         }
-        let options = {
-            data: opts.data,
-            params: opts.params
-        }
-        return this._axios[method](url, options)
+        return this._axios[method](url,opts);
+    }
+
+    send(url,method='get',opts={data:{},params:{}}){
+        let promise = this.promise(...arguments);
+        return promise
             .then(response=>{
-                this.cmd.success.call(this.cmd, response.data, response);
+                this.cmd.success(response);
             })
             .catch(error=>{
-                  this.cmd.fail.call(this.cmd, error);
+                  this.cmd.fail(error);
             });
+    }
+
+    ajax(url,method='get',opts={data:{},params:{}}){
+        let promise = this.promise(...arguments);
+        return function(success,fail,context){
+            context = context||null;
+            return promise
+                .then(response=>{
+                    success&&success.call(context,response);
+                    promise = null;
+                })
+                .catch(error=>{
+                    fail&&fail.call(context,error);
+                    promise = null;
+                });
+        }
     }
 
 

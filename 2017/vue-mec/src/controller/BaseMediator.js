@@ -1,29 +1,15 @@
-import {BaseController} from './BaseController';
 import {EventBus} from '../event/EventBus';
 import {IDUtil} from '../utils/IDUtil';
 import {BaseCommand} from '../service/BaseCommand';
+import {FunUtil} from '../utils/FunUtil';
 
-export class BaseMediator extends BaseController{
+export class BaseMediator{
 
     constructor(){
-        super(...arguments);
         this._evts = {};
-        if(this.beforeCreate){
-            this.beforeCreate.call(this)
-        }
     }
 
-    executeCommand(CmdClass, ...params){
-        if(!CmdClass) {return;}
-        if(typeof CmdClass !== 'function') {return;}
-        if(!(CmdClass.prototype instanceof BaseCommand)) {
-            throw new Error('Expectes CmdClass as a BaseCommand class.');
-        }
-        let cmd = new CmdClass(params.shift());
-        return cmd.execute.apply(cmd, [...params]);
-    }
-
-    dispatch(target,eType,...data){
+    callEvent(target,eType,...data){
         if(!target){
             target = EventBus.getInstance();
         }
@@ -33,20 +19,37 @@ export class BaseMediator extends BaseController{
         target.$emit(eType, ...data);
     }
 
-    addListener(target,eType,callback,...data){
+    attachEvent(target,eType,callback,...data){
         if(!target){
             target = EventBus.getInstance();
 		}
         if(typeof target.$on !== 'function'){
             throw new Event(`target must extends EventDispatcher or an instance of Vue`)
         }
-        let eId = target.$on(eType,callback,...data);
-        if(!eId){eId = IDUtil.uuid();}
-        this._evts[eId] = {target,eType,callback};
-        return eId;
+
+        let isCmd = callback.prototype instanceof BaseCommand;
+        let eInfo = isCmd?this._addCmdMap(target,eType,callback,data):this._addEvtMap(target,eType,callback,data);
+        this._evts[eInfo.eId] = eInfo;
+        return eInfo.eId;
     }
 
-    removeListener(eId){
+    _addCmdMap(target,eType,callback,data){
+        var cmd = new callback();
+		if(!cmd.execute || (typeof cmd.execute !== 'function')) {
+			throw new Error('The command must implement method [execute]');
+		}
+		return this._addEvtMap(target, eType, cmd.execute.bind(cmd), data);
+    }
+
+    _addEvtMap(target,eType,callback,data){
+        var args = [callback,...data];
+        let handler = FunUtil.partial(...args);
+        var eId = target.$on(eType, handler);
+        if(!eId) eId = IDUtil.uuid();
+		return {eId,target,eType,handler};
+    }
+
+    off(eId){
         if(!eId){return;}
         let info = this._evts[eId];
         if(!info){return;}
@@ -56,19 +59,19 @@ export class BaseMediator extends BaseController{
         delete this._evts[eId];
     }
 
-    clearListeners(){
+    clear(){
         let names = Object.getOwnPropertyNames(this._evts);
         let n = names.length;
         for(let i=0;i<n;i++){
             let name = names[i];
-            this.removeListener(name);
+            this.off(name);
         }
         this._evts = {};
     }
 
     destroy(){
-		super.destroy();
-		this.clearListeners();
+        this.clear();
+        this._vm = null;
     }
 
 
