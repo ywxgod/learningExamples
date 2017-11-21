@@ -14,7 +14,7 @@ Some es6 class utils.
 <br/>
 <b>AjaxCommand</b> - extends to the BaseCommand
 <br/>
-<b>BaseController</b> - a base controller class for vue component
+<b>VueMediator</b> - a mixins object for vue component
 <br/>
 <b>BaseMediator</b> - extends from BaseController.
 <br/>
@@ -24,14 +24,7 @@ Usage:
 ```bash
 npm install vue-mec
 
-import {BaseMediator} from 'vue-mec';
-import {AjaxCommand,AjaxService} from 'vue-mec';
-```
-
-or
-
-```bash
-import * as mec from 'vue-mec';
+import * as VueMec from 'vue-mec';
 ```
 
 examples:
@@ -41,13 +34,13 @@ examples:
 ```bash
 <script>
     import { AppCtrl } from './AppCtrl';
+    import * as VueMec from 'vue-mec';
+
     export default {
         name: 'app',
+        mixins: [VueMec.VueMediator,AppCtrl]
         components: {
             Hello
-        },
-        beforeCreate() {
-            new AppCtrl(this)
         }
     }
 </script>
@@ -72,7 +65,7 @@ export class GetDataCommand extends AjaxCommand{
     }
 
     success(data,response){
-		this.dispatch('haha',data);
+		this.dispatch(false,'haha',data);
     }
 
     fail(error){
@@ -86,24 +79,24 @@ export class GetDataCommand extends AjaxCommand{
 <b>AppCtrl.js</b>
 
 ```bash
-import {BaseMediator}  from 'vue-mec';
+import * as VueMec  from 'vue-mec';
 import {GetDataCommand} from './GetDataCommand';
 
-export class AppCtrl extends BaseMediator{
+export AppCtrl = {
 
-    mounted(){
-		
-		this.addListener(false,'xxxx', GetDataCommand);
-		this.addListener(false,'haha',(data)=>{
-			console.log(data);
-		});
-		console.log('mounted...');
-		this.dispatch(false,'xxxx',11,22,33);
+    methods:{
+        ...VueMec.mapCommands({
+            onClick: TestCommand
+        }),
+        $mapEvents(){
+            this.$attachEvent(false,'xxxx', GetDataCommand);
+            this.$attachEvent(false,'haha',(data)=>{
+                console.log(data);
+            });
+            this.$callEvent(false,'xxxx',11,22,33);
+        }
+
     }
-	
-	onClick(vm,e){
-		console.log(vm,e);
-	}
 
     data(){
         return {
@@ -111,26 +104,6 @@ export class AppCtrl extends BaseMediator{
         }
     }
 
-    computed(){
-        return {
-            xx(){
-                return this.vm.a+this.vm.b;
-            }
-        }
-    }
-
-    watch(){
-        return {
-            a(newv,oldv){
-                console.log(newv,'a');
-            }
-        }
-	}
-	
-	destroy(){
-		super.destroy();
-		console.log('destroyed...');
-	}
 }
 
 
