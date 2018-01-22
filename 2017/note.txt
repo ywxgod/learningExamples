@@ -1,4 +1,214 @@
 //////////////////////////////////////////////////////////////////////////////////////////////
+//intro.txt
+//////////////////////////////////////////////////////////////////////////////////////////////
+001. 创建如下目录结构
+    D:.
+    │  .babelrc
+    │  .gitignore
+    │  intro.txt
+    │  package.json
+    │  webpack.config.js
+    │
+    └─src
+        ├─app
+        │      index.html
+        │      index.js
+        │
+        └─test
+                test.js
+
+002. 初始化项目
+    npm init -y ---当前目录会产生package.json文件
+
+003. 安装各种依赖包
+
+    npm install webpack -D
+    npm install webpack-dev-server -D
+    npm install nodemon -D
+    npm install shx -D
+
+    npm install babel-loader -D
+    npm install babel-core -D
+    npm install babel-preset-env -D
+    npm install babel-preset-es2015 -D
+
+    npm install vue -S
+    npm install axios -S
+    npm install vuex -S
+    npm install vue-router -S
+    npm install element-ui -S
+
+    npm install vue-loader -D
+    npm install vue-template-compiler -D
+
+    npm install node-sass -D
+    npm install sass-loader -D
+    npm install style-loader -D
+    npm install css-loader -D
+
+    npm install file-loader -D
+    npm install url-loader -D
+    
+    npm install extract-text-webpack-plugin -D
+    npm install html-webpack-plugin -D
+    npm install babel-plugin-component -D //element-ui依赖
+
+004. 将css从vue组件中提取到单独的css文件中
+    只需要设置vue-loader的extractCSS为true即可。
+
+005. 使用element-ui
+    1. 在.babelrc中添加如下内容：
+        "plugins": [["component", [
+        {
+            "libraryName": "element-ui",
+            "styleLibraryName": "theme-chalk"
+        }
+        ]]]
+    2. 安装babel-plugin-component依赖：
+        npm install babel-plugin-component -D
+    3. 引入element-ui：
+        import ElementUI from 'element-ui';
+        import 'element-ui/lib/theme-chalk/index.css';
+    4. 测试elementui
+        在MainView.vue中添加：<el-button type="danger">{{'test'}}</el-button>
+
+006. 在css文件中使用图片：
+    body{
+        background-image: url('../../../assets/images/Lighthouse.jpg');
+    }
+    当前目录为此样式所在文件的目录。
+    当使用相对路径时，url-loader, file-loader需要设置publicPath
+
+007. 在js文件中导入图片：
+    只需要像导入js一样导入即可，如在MainView.vue的script标签内加入 
+    import Lighthouse from '@assets/images/Lighthouse.jpg';
+    Lighthouse即为图片的相对路径。
+    this.$refs.mainView.style.backgroundImage = `url(${Lighthouse})`;
+    可以直接将此路径用于任何可用地方。
+
+008. 压缩css，去掉重复
+    npm install cssnano optimize-css-assets-webpack-plugin -D
+    添加如下插件：
+    const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+    const cssnano = require('cssnano');
+    new OptimizeCssAssetsPlugin({
+        assetNameRegExp: /\.css$/g,
+        cssProcessor: cssnano,
+        cssProcessorOptions: { discardComments: {removeAll: true } },
+        canPrint: true
+    });
+
+009. 从css框架/ui组件库中去掉不用的css
+    npm install purifycss-webpack purify-css glob -D
+    添加如下插件：
+    const PurifyCSSPlugin = require('purifycss-webpack');
+    const glob = require('glob');
+    new PurifyCSSPlugin({
+        paths: glob.sync(`${PATHS.entry}/**/*.vue`)
+    });
+    1. purifycss-webpack 插件必须用在extract-text-webpack-plugin之后。
+    2. paths 可以是数组也可以是对象，包含的路径必须是绝对路径。
+
+010. 使用sass语法
+    1. 修改extract-text-webpack-plugin配置：
+        {
+            test: /\.s?css$/,
+            //exclude: /(node_modules|bower_components)/,
+            use: ExtractTextWebpackPlugin.extract({
+                fallback: 'style-loader',
+                use: [
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            modules: false
+                        }
+                    },
+                    'sass-loader'
+                ]
+            })
+        }
+    2. style标签设置lang='scss',添加sass语法的css代码
+011. 使用font-awesome
+    1. npm install font-awesome -S
+    2. 如果没有安装file-loader，需要安装
+    3. 添加alias：fontAwesome: path.join(__dirname,'../../node_modules/font-awesome/css/font-awesome.css'),
+       也可以直接在入口处导入其样式文件而无需添加alias: import 'fontAwesome';
+    4. 在模板中添加测试：<span class="fa fa-address-book"></span>
+
+012. 压缩js
+    添加如下插件：webpack.optimize.UglifyJsPlugin
+    const UglifyJsWebpackPlugin = require('webpack.optimize.UglifyJsPlugin');
+    new UglifyJsWebpackPlugin({
+        sourceMap: true,
+        beautify: false,
+        mangle: {
+            screw_ie8: true
+        },
+        compress: {
+            unused: true,
+            dead_code: true,
+            drop_debugger: true,
+            conditionals: true,
+            evaluate: true,
+            drop_console: true,
+            sequences: true,
+            booleans: true,
+            screw_ie8: true,
+            warnings: false
+        },
+        comments: false
+    });
+
+013. 只导入用到的element组件
+    修改element-ui的导入：
+    import {Button} from 'element-ui';
+    Vue.use(Button);
+
+014. 暴露环境变量
+    添加如下插件：webpack.DefinePlugin
+    new webpack.DefinePlugin({
+        ENV: '"production"'
+    });
+
+015. 查看打包明细
+    1. 安装： npm install webpack-bundle-analyzer -D
+    2. 添加到plugins中：
+        const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+        if(bundleAnlyzerReport){
+            plugins.push(new BundleAnalyzerPlugin());
+        }
+016. 使用gzip压缩资源
+    1. 安装：npm install compression-webpack-plugin -D
+    2. 添加到plugins中：
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// zte-vue-mec start
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+017. 使用zte-vue-mec
+    1. src目录下创建子目录：src\libs\zte\zte-vue-mec
+    2. 拷贝zte-mec-vue.js到目录中
+    3. 添加alias：zte-vue-mec: path.join(__dirname, '../../src/libs/zte/zte-vue-mec/zte-vue-mec.js')
+    4. 使用测试：
+        import * as VueMec from 'zte-vue-mec';
+        console.log(VueMec);
+
+018. 给组件添加对应的controller - 文件名首字母大写
+    1. executeCommand用法
+    2. mapCommands用法
+    3. $mapEvents用法
+    4. Command使用介绍
+        
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// zte-vue-mec end
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+019. vue-router
+    0. 安装vue-router,并启用
+    1. 添加router目录：routes.js,router.js
+    2. mainView增加router-view组件
+020. vuex
+021. 使用Typescript
+022. 添加单元测试
+//////////////////////////////////////////////////////////////////////////////////////////////
 //package.json
 //////////////////////////////////////////////////////////////////////////////////////////////
 "scripts": {
@@ -46,4 +256,376 @@
     "webpack-bundle-analyzer": "^2.9.1",
     "webpack-dev-server": "^2.9.5"
   }
-  
+//////////////////////////////////////////////////////////////////////////////////////////////
+//.babelrc
+//////////////////////////////////////////////////////////////////////////////////////////////
+{
+    "presets": [
+      ["env", {
+        "targets": {
+          "browsers": ["last 2 versions", "safari >= 7"]
+        }
+      }],
+      ["stage-2"]
+    ],
+    "plugins": [["component", [
+      {
+        "libraryName": "element-ui",
+        "styleLibraryName": "theme-chalk"
+      }
+    ]]]
+  }
+//////////////////////////////////////////////////////////////////////////////////////////////
+//webpack.config.js
+//////////////////////////////////////////////////////////////////////////////////////////////
+const {ENV} = require('./build/configConst');
+const devConfig = require('./build/webpack.dev');
+const prodConfig = require('./build/webpack.prod');
+const testConfig = require('./build/webpack.test');
+
+module.exports = function(env){
+    if(env===ENV.prod){
+        return prodConfig(env);
+    }else if(env===ENV.test){
+        return testConfig(env);
+    }else{
+        return devConfig(env);
+    }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+//build/configConst.js
+//////////////////////////////////////////////////////////////////////////////////////////////
+const path = require('path');
+
+module.exports = {
+    ENV: {
+        dev: 'development',
+        prod: 'production',
+        test: 'test'
+    },
+    PATHS: {
+        entry: path.join(__dirname, '../src/app'),
+        build: path.join(__dirname, '../dist'),
+        publicPath: path.join(__dirname, '../dist'),
+        vue_dev: 'vue/dist/vue.js',
+        vue_prod: 'vue/dist/vue.min.js',
+        vue_mec: ''
+    },
+    PORTS:{
+        dev: 4201
+    },
+    bundleAnlyzerReport: false,
+    gzipFileExts: ['js','css'],
+    purifyCssWhiteList: ['*form*','*table*','*dialog*','*input*','*color*','*dropdown*','*slider*']
+};
+//////////////////////////////////////////////////////////////////////////////////////////////
+//build/webpack.dev.js
+//////////////////////////////////////////////////////////////////////////////////////////////
+const {PATHS,ENV,PORTS} = require('./configConst');
+const entry = require('./webpack/entry');
+const output = require('./webpack/output');
+const cmodule = require('./webpack/cmodule');
+const plugins = require('./webpack/plugins');
+const resolve = require('./webpack/resolve');
+
+let env = ENV.dev;
+let devServer = {
+	contentBase: PATHS.publicPath,
+	port: PORTS.dev,
+	host: '0.0.0.0',
+	watchContentBase: true,
+	historyApiFallback: true,
+	stats: {
+		performance: true,
+		chunks: false,
+		chunkModules: false,
+		chunkOrigins: false,
+		errors: true,
+		errorDetails: true,
+		hash: false,
+		timings: false,
+		modules: false,
+		warnings: true
+    }
+};
+
+module.exports = function(env){
+    return {
+		bail:true,
+        devServer,
+        devtool: 'sourcemap',
+        entry: entry(env),
+        output: output(env),
+        module: cmodule(env),
+        plugins: plugins(env),
+        resolve: resolve(env)
+    }
+}
+//////////////////////////////////////////////////////////////////////////////////////////////
+//build/webpack.prod.js
+//////////////////////////////////////////////////////////////////////////////////////////////
+const {PATHS,ENV,PORTS} = require('./configConst');
+const entry = require('./webpack/entry');
+const output = require('./webpack/output');
+const cmodule = require('./webpack/cmodule');
+const plugins = require('./webpack/plugins');
+const resolve = require('./webpack/resolve');
+
+let env = ENV.prod;
+
+module.exports = function(env){
+    return {
+        entry: entry(env),
+        output: output(env),
+        module: cmodule(env),
+        plugins: plugins(env),
+        resolve: resolve(env)
+    }
+}
+//////////////////////////////////////////////////////////////////////////////////////////////
+//build/webpack.test.js
+//////////////////////////////////////////////////////////////////////////////////////////////
+const {PATHS,ENV} = require('./configConst');
+const entry = require('./webpack/entry');
+const output = require('./webpack/output');
+const cmodule = require('./webpack/cmodule');
+const plugins = require('./webpack/plugins');
+const resolve = require('./webpack/resolve');
+
+let env = ENV.test;
+
+module.exports = function(env){
+    return {
+        devtool: 'sourcemap',
+        entry: entry(env),
+        output: output(env),
+        module: cmodule(env),
+        plugins: plugins(env),
+        resolve: resolve(env)
+    }
+}
+//////////////////////////////////////////////////////////////////////////////////////////////
+//build/webpack/cmodule.js
+//////////////////////////////////////////////////////////////////////////////////////////////
+const {PATHS,ENV,PORTS} = require('../configConst');
+const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
+
+module.exports = function(env){
+    return {
+        rules:[
+            {
+                test: /\.vue$/,
+                use: {
+                    loader: 'vue-loader',
+                    options: {
+                        extractCSS: true
+                    }
+                }
+            },
+            {
+                test: /\.js$/,
+                exclude: /(node_modules|bower_components)/,
+                loader: 'babel-loader'
+            },
+            {
+                test: /\.s?css$/,
+                //exclude: /(node_modules|bower_components)/,
+                use: ExtractTextWebpackPlugin.extract({
+                    fallback: 'style-loader',
+                    use: ['css-loader','sass-loader']
+                })
+            },
+            {
+                test: /.(jpg|jpeg|gif|bmp|png)$/,
+                use: {
+                    loader: 'url-loader',
+                    options: {
+                        limit: 10240,
+                        publicPath: '../',
+                        name: './images/[name]-[hash:8].[ext]'
+                    }
+                }
+            },
+            {
+                test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
+                loader: 'url-loader',
+                options: {
+                    limit: 10240,
+                    publicPath: '../',
+                    name: './media/[name].[hash:8].[ext]'
+                }
+            },
+            {
+                test: /\.(svg|eot|ttf|woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
+                use: {
+                    loader: 'file-loader',
+                    options: {
+                        publicPath: '../',
+                        name: './fonts/[name].[ext]'
+                    }
+                }
+            }
+        ]
+    }
+}
+//////////////////////////////////////////////////////////////////////////////////////////////
+//build/webpack/entry.js
+//////////////////////////////////////////////////////////////////////////////////////////////
+const {PATHS,ENV,PORTS} = require('../configConst');
+
+module.exports = function(env){
+    return {
+        app: PATHS.entry
+    }
+}
+//////////////////////////////////////////////////////////////////////////////////////////////
+//build/webpack/output.js
+//////////////////////////////////////////////////////////////////////////////////////////////
+const {PATHS,ENV,PORTS} = require('../configConst');
+
+module.exports = function(env){
+    return {
+        filename: '[name]-[chunkhash:8].js',
+        path: PATHS.build,
+        chunkFilename: '[name]-[chunkhash:8].[ext]'
+    }
+}
+//////////////////////////////////////////////////////////////////////////////////////////////
+//build/webpack/plugins.js
+//////////////////////////////////////////////////////////////////////////////////////////////
+const {
+    PATHS,ENV,PORTS,bundleAnlyzerReport,
+    purifyCssWhiteList,gzipFileExts
+} = require('../configConst');
+const webpack = require('webpack');
+const cssnano = require('cssnano');
+const path = require('path');
+const PurifyCSSPlugin = require('purifycss-webpack');
+const glob = require('glob');
+
+const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CompressionWebpackPlugin = require('compression-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const CommonsChunkWebpackPlugin = webpack.optimize.CommonsChunkPlugin;
+const UglifyJsWebpackPlugin = webpack.optimize.UglifyJsPlugin;
+const LoaderOptionsWebpackPlugin = webpack.LoaderOptionsPlugin;
+
+
+let uglyjsPlugin = new UglifyJsWebpackPlugin({
+    sourceMap: true,
+    beautify: false,
+    mangle: {
+        screw_ie8: true
+    },
+    compress: {
+        unused: true,
+        dead_code: true,
+        drop_debugger: true,
+        conditionals: true,
+        evaluate: true,
+        drop_console: true,
+        sequences: true,
+        booleans: true,
+        screw_ie8: true,
+        warnings: false
+    },
+    comments: false
+});
+let loaderOptionsPlugin = new LoaderOptionsWebpackPlugin({
+    minimize: true,
+    debug: false
+});
+let cssOptimization = new OptimizeCssAssetsPlugin({
+    assetNameRegExp: /\.css$/g,
+    cssProcessor: cssnano,
+    cssProcessorOptions: { discardComments: {removeAll: true } },
+    canPrint: true
+});
+let purifyCssPlugin = new PurifyCSSPlugin({
+    paths: glob.sync(`${PATHS.entry}/**/*.vue`),
+    purifyOptions:{
+        info: true,
+        minify: true,
+        rejected: false,
+        whitelist: purifyCssWhiteList
+    }
+});
+let compressWebpackPlugin = new CompressionWebpackPlugin({
+    //asset: '[path].gz[query]',
+    //algorithm: 'gzip',
+    test: new RegExp('\.(' +gzipFileExts.join('|') +')$'),
+    //threshold: 10240,
+    //minRatio: 0.8
+});
+
+module.exports = function(env){
+    let plugins = [
+        new webpack.DefinePlugin({
+            ENV: JSON.stringify(env)
+        }),
+        new ExtractTextWebpackPlugin({
+            allChunks: true,
+            filename: './styles/[name]-[hash:8].css'
+        }),
+        new HtmlWebpackPlugin({
+            title: 'Start Vue From Scratch',
+            template: path.join(PATHS.entry, 'index.html')
+        }),
+        new CommonsChunkWebpackPlugin({
+            name: 'vendor',
+            chunks: ['app'],
+            minChunks: function (module, count) {
+                return (
+                    module.resource &&
+                    /\.js$/.test(module.resource) &&
+                    module.resource.indexOf(path.join(__dirname, '../../node_modules')) === 0
+                )
+            }
+        }),
+        new CommonsChunkWebpackPlugin({
+            name: 'ui',
+            chunks: ['vendor'],
+            minChunks: function (module, count) {
+                return (
+                    module.resource &&
+                    module.resource.indexOf(path.join(__dirname, '../../node_modules/element-ui')) !== -1
+                )
+            }
+        }),
+        new CommonsChunkWebpackPlugin({
+            name: 'manifest',
+            minChunks: 'Infinity'
+        })
+    ];
+    if(env===ENV.prod){
+        plugins.push(loaderOptionsPlugin,uglyjsPlugin,purifyCssPlugin,cssOptimization,compressWebpackPlugin);
+    }
+    if(bundleAnlyzerReport){
+        plugins.push(new BundleAnalyzerPlugin());
+    }
+    return plugins;
+};
+//////////////////////////////////////////////////////////////////////////////////////////////
+//build/webpack/resolve.js
+//////////////////////////////////////////////////////////////////////////////////////////////
+const {PATHS,ENV,PORTS} = require('../configConst');
+const path = require('path');
+
+function getVueUrl(env){
+    return (env===ENV.dev||env===ENV.test)?PATHS.vue_dev:PATHS.vue_prod;
+}
+
+module.exports = function(env){
+    return {
+        alias:{
+            'vue': getVueUrl(env),
+            'zte-vue-mec': path.join(__dirname, '../../src/libs/zte/zte-vue-mec/zte-vue-mec.js'),
+            'fontAwesome': path.join(__dirname,'../../node_modules/font-awesome/css/font-awesome.css'),
+            '@': path.join(__dirname,'../../src'),
+            '@assets': path.join(__dirname, '../../assets')
+        }
+    }
+}
