@@ -1,0 +1,12 @@
+webpack webpack-cli webpack-dev-server
+html-webpack-plugin
+react react-dom -S
+babel-core babel-loader babel-preset-env babel-preset-react
+
+.babelrc:
+{
+    "presets":["env","react"]
+}
+
+
+
