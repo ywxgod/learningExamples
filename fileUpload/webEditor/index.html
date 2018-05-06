@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Web Editor</title>
+		<!--<link href="libs/code-prettify-master/src/prettify.css" rel="stylesheet" />-->
+		<link href="libs/bootstrap-3.3.5/dist/css/bootstrap.css" rel="stylesheet">
+		<!--<link href="libs/steveathon-bootstrap-wysiwyg/css/style.css" rel="stylesheet">-->
+		
+		<script src="libs/jquery-2.1.4.js"></script>
+		<script src="libs/jquery.hotkeys-master/jquery.hotkeys.js"></script>
+		<!--<script src="libs/code-prettify-master/src/prettify.js"></script>-->
+		<script src="libs/bootstrap-3.3.5/dist/js/bootstrap.js"></script>
+		<script src="libs/steveathon-bootstrap-wysiwyg/src/bootstrap-wysiwyg.js"></script>
+		<script src="FileUtil.js"></script>
+		<script src="webEditor.js"></script>
+		
+		<style>
+			html,body{
+				font-size: 62.5%;
+			}
+			#editorWrapper{
+				margin: 10px auto;
+				overflow: auto;
+				max-width: 960px;
+				min-width: 240px;
+			}
+			#btn-toolbar .btn{
+				font-size: 0.9rem !important;
+			}
+			#editor{
+				margin: 10px 0;
+				
+				overflow: hidden;
+				min-height: 300px;
+				font-size: 1.4rem;
+			}
+			#noteTitleDiv{
+				margin: 10px 0;
+			}
+			#noteTitleDiv input{
+				font-size: 3.5rem;
+				border: none;
+				background: none;
+				outline: none;
+			}
+			#editor:focus{
+				box-shadow: none;
+				border-width: 0px;
+			}
+		</style>
+		
+	</head>
+	<body>
+		<div id="editorWrapper">
+			<div class="btn-toolbar" data-role="editor-toolbar" data-target="#editor">
+				<button type="button" class="btn btn-default glyphicon glyphicon-xbt" data-edit="bold"></button>
+				<!--data-edit="insertImage"-->
+				<button type="button" class="btn btn-default glyphicon glyphicon-file"></button>
+				<a class="btn btn-default glyphicon glyphicon-minus" data-edit="unlink" title="Remove Hyperlink"></a>
+				<div class="btn-group">
+					<a class="btn btn-default glyphicon glyphicon-menu-left" data-edit="undo" title="Undo (Ctrl/Cmd+Z)"></a>
+					<a class="btn btn-default glyphicon glyphicon-menu-right" data-edit="redo" title="Redo (Ctrl/Cmd+Y)"></a>
+				</div>
+				<div class="btn-group">
+					<a class="btn btn-default dropdown-toggle glyphicon glyphicon-link" data-toggle="dropdown" title="Hyperlink"></a>
+					<div class="dropdown-menu input-append">
+						<input placeholder="URL" type="text" data-edit="createLink" />
+						<button class="btn" type="button">Add</button>
+					</div>
+				</div>
+				<div class="btn-group hidden">
+					<span class="btn btn-default" title="Insert picture (or just drag & drop)" id="pictureBtn">
+						<!--data-edit="insertImage"-->
+						<input type="file" data-role="magic-overlay" data-target="#pictureBtn" />
+					</span>
+				</div>
+			</div>
+			<div id="noteTitleDiv">
+				<input placeholder="写下笔记标题">
+			</div>
+			<div id="editor">
+				<div id="placeholder">拖放文件到这里，或者直接开始输入...</div>
+			</div>
+		</div>
+		
+	</body>
+</html>

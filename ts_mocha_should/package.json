@@ -1,0 +1,16 @@
+{
+  "name": "cha01_02",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "run": "node dist/app/app.js",
+    "test": "mocha ./dist/test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "should": "^11.2.1"
+  }
+}

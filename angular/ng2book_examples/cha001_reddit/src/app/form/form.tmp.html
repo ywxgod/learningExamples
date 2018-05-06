@@ -1,0 +1,37 @@
+<div class="pure-g">
+    <div class="pure-u-1-5"></div>
+    <div class="pure-u-3-5">
+        <form class="pure-form pure-form-stacked">
+            <fieldset>
+                <legend>Add a Link</legend>
+
+                <label for="title">Title</label>
+                <input 
+                    id="title" #newTitle 
+                    type="text" 
+                    class="pure-input-1" 
+                    placeholder="Title" >
+
+                <label for="link">Link</label>
+                <input 
+                    id="link" #newLink 
+                    type="text" 
+                    class="pure-input-1" 
+                    placeholder="Link" >
+                <br/>
+                <div class="pure-g">
+                    <div class="pure-u-4-5"></div>
+                    <div class="pure-u-1-5">
+                        <button 
+                            (click)="addArticle(newTitle,newLink)"
+                            type="submit" 
+                            class="pure-button pure-button-primary">Sign in</button>
+                    </div>
+                </div>
+                
+            </fieldset>
+        </form>
+    </div>
+    <div class="pure-u-1-5"></div>
+</div>
+

@@ -1,0 +1,67 @@
+//es6+vue.js+bootstrap+webpack
+
+webpack
+webpack-dev-server
+nodemon
+
+babel-core
+babel-preset-es2015
+babel-loader
+
+url-loader
+file-loader
+
+style-loader
+css-loader
+sass-loader
+node-sass
+
+vue
+vue-loader
+vue-template-compiler
+
+html-webpack-plugin
+ExtractTextWebpackPlugin
+webpack.ProvidePlugin 提供全局变量，自动加载某些模块。此处解决bootstrap依赖jquery的问题。
+
+bootstrap
+jquery
+
+
+//TODO: 0. 加入bootstrap3.x，包括js(js组件)，css。
+    1). 安装bootstrap：npm install bootstrap@3 -S
+    2). 安装jquery: npm install jquery -S
+    3). 设置resolve的alias，如下：
+        resolve.alias.bootstrapCss = isDevelopment()?PATHS.BOOTSTRAP_CSS_DEV:PATHS.BOOTSTRAP_CSS_PROD;
+	    resolve.alias.bootstrapJs = isDevelopment()?PATHS.BOOTSTRAP_JS_DEV:PATHS.BOOTSTRAP_JS_PROD;
+        根据配置不同，调用不同的css，js版本。
+    4). 通过import语句导入bootstrap的css与js，如下：
+        import 'bootstrapCss';
+        import 'bootstrapJs';
+
+//TODO: 1. 处理加载bootstrap.js时依赖jquery的问题。
+    1). 添加webpack.ProvidePlugin插件，设置依赖，或者说全局引用，如：
+        new ProvidePlugin({
+            $: 'jquery',
+            jQuery: 'jquery',
+            "window.$": 'jquery',
+            "window.jQuery": 'jquery'
+        })
+//TODO: 2. 处理ExtractTextWebpackPlugin改写静态文件路径的问题。
+    1). 在file-loader的配置中设置publicPath覆盖静态文件路径到build目录，如：
+        {
+            test: /\.(svg|eot|ttf|woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
+            use: {
+                loader: 'file-loader',
+                options: {
+                    publicPath: '../', //重写publicPath
+                    name: './fonts/[name].[ext]'
+                }
+            }
+        }
+        如果不覆盖publicPath，所有字体的查找路径将会是./dist/styles/fonts/[name].[ext],而实际的字体文件
+        路径是./dist/fonts/[name].[ext].
+//TODO: 3. 删除未用到的css
+	//使用purifycss插件会导致bootstrap的JavaScript component失效
+	//仅仅测试过dropdown-menu组件，具体可以参考header.vue
+	//github上面也有相应的报告：https://github.com/purifycss/purifycss/issues/135
