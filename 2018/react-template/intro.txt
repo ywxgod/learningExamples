@@ -1,0 +1,12 @@
+0. npm init -y
+1. npm install -D webpack webpack-dev-server webpack-cli
+2. npm install -D babel-core babel-loader babel-preset-env babel-preset-react
+3. npm install -D html-webpack-plugin mini-css-extract-plugin uglifyjs-webpack-plugin optimize-css-assets-webpack-plugin
+4. npm install -D style-loader css-loader sass-loader node-sass postcss-loader
+5. npm install -D file-loader url-loader
+6. npm install -S react react-dom
+7. npm install -D nodemon shx
+
+
+
+
