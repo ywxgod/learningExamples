@@ -4,6 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
     <title>Threejs-example</title>
+    <script type="text/javascript">
+    	function supportWebGL(){
+			var canvas = document.createElement( 'canvas' ); 
+			return !!(window.WebGLRenderingContext && (canvas.getContext('webgl')||canvas.getContext('experimental-webgl')));
+		}
+
+		function showMessage(msg){
+			alert(msg);
+		}
+		if(!supportWebGL()){
+			if(!window.WebGLRenderingContext){
+				showMessage(
+					`Your graphics card does not seem to support <a href="http://khronos.org/webgl/wiki/Getting_a_WebGL_Implementation" style="color:#000">WebGL</a>.
+					Find out how to get it <a href="http://get.webgl.org/" style="color:#000">here</a>.`
+				);
+			}else{
+				showMessage(
+					`Your browser does not seem to support <a href="http://khronos.org/webgl/wiki/Getting_a_WebGL_Implementation" style="color:#000">WebGL</a>.
+					Find out how to get it <a href="http://get.webgl.org/" style="color:#000">here</a>.`
+				);
+			}
+			
+		}
+    </script>
 </head>
 <body>
     <div id="app"></div>
