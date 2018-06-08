@@ -3,11 +3,14 @@ import {
 	Scene, PerspectiveCamera, WebGLRenderer,
 	BoxGeometry, MeshBasicMaterial, Mesh
 } from 'three';
+import line from './line';
 
 function render(){
 	requestAnimationFrame(render);
 	cube.rotation.x += 0.01;
 	cube.rotation.y += 0.01;
+	line.rotation.y += 0.02;
+	
 
 	renderer.render(scene, camera);
 }
@@ -36,11 +39,12 @@ let renderer = new WebGLRenderer();
 renderer.setSize(sceneWidth,sceneHeight);
 document.body.appendChild(renderer.domElement);
 
-let geometry = new BoxGeometry(1,1,1);
-let material = new MeshBasicMaterial({color: 0x00ff00});
+let geometry = new BoxGeometry(50,50,50);
+let material = new MeshBasicMaterial({color: 0xff0000});
 let cube = new Mesh(geometry, material);
 scene.add(cube);
-camera.position.z = 5;
+scene.add(line);
+camera.position.z = 200;
 
 render();
 resize();
