@@ -1,9 +1,11 @@
-import * as Three from 'three';
 import { 
-	Scene, PerspectiveCamera, WebGLRenderer,
-	BoxGeometry, MeshBasicMaterial, Mesh
+	Scene, PerspectiveCamera, WebGLRenderer
 } from 'three';
-import line from './line';
+
+import line from './modules/line';
+import cube from './modules/cube';
+import text from './modules/text';
+import favicon from '@assets/favicon.ico';
 
 function render(){
 	requestAnimationFrame(render);
@@ -39,9 +41,7 @@ let renderer = new WebGLRenderer();
 renderer.setSize(sceneWidth,sceneHeight);
 document.body.appendChild(renderer.domElement);
 
-let geometry = new BoxGeometry(50,50,50);
-let material = new MeshBasicMaterial({color: 0xff0000});
-let cube = new Mesh(geometry, material);
+
 scene.add(cube);
 scene.add(line);
 camera.position.z = 200;
@@ -49,3 +49,7 @@ camera.position.z = 200;
 render();
 resize();
 window.addEventListener('resize', resize);
+
+text.domText('DOM+CSS hello', 100,100, '#fff');
+
+text.textureText(favicon);
