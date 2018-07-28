@@ -1,0 +1,15 @@
+{
+    "presets": [
+      ["env",{"module":false}]
+    ],
+    "plugins": [
+        ["syntax-dynamic-import"],
+        [
+            "component", 
+            {
+                "libraryName": "element-ui",
+                "styleLibraryName": "theme-chalk"
+            }
+        ]
+    ]
+  }
