@@ -17,11 +17,6 @@ module.exports = function (env){
                     chunks: 'all',
                     enforce: true
                 },
-                react: {
-                    name: 'react',
-                    test: /node_modules\\react/,
-                    chunks: 'initial',
-                },
                 phaser:{
                     name: 'phaser',
                     test: /node_modules\\phaser/,

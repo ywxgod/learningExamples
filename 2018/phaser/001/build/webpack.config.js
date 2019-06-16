@@ -4,7 +4,6 @@
 
 const path = require('path');
 const {PATHS,ENVS} = require('./configConst');
-const { isProd } = require('./utils');
 
 const rules = require('./rules');
 const optimization = require('./optimization');
