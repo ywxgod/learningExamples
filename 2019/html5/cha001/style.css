@@ -1,0 +1,14 @@
+:invalid{
+	background-color: #ffd4d4;
+	border: 1px solid maroon;
+}
+
+form.invalid input:invalid, form.invalid select:invalid,
+form.invalid input.invalid, form.invalid select.invalid{
+	background-color: #ffd4d4;
+	border: 1px solid maroon;
+}
+
+input:required, select:required{
+	background-color: lightyellow;
+}
