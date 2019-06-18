@@ -1,9 +1,22 @@
-import { VueMediator } from "./VueMediator";
+import { BaseMediator } from "../../core/mediator/BaseMediator";
+
+export class VueMediator extends BaseMediator{}
 
 export const VueMixins = {
 
     methods: {
+        $dispatch(action){
+            this.$mediator.fire(action);
+        },
+        $attach(actionType, handler){
+            this.$mediator.on(actionType, handler);
+        },
+        $detach(symbol){
+            this.$mediator.off(symbol);
+        },
+        $init(){
 
+        }
     },
     
     beforeCreate(){
@@ -11,7 +24,7 @@ export const VueMixins = {
     },
 
     mounted(){
-        this.$mediator.init();
+        this.$init();
     },
 
     beforeDestory(){

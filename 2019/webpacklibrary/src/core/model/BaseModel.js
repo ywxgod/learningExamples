@@ -7,8 +7,8 @@ export class BaseModel{
         this.initData();
     }
 
-    commit(actionType,payload){
-        this._actionBus.callAction(actionType, payload);
+    fire(action){
+        this._actionBus.fire(action);
     }
 
     //子类覆盖
