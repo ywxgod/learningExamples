@@ -1,18 +1,20 @@
 import { ActionBus } from "../action/ActionBus";
+//import Vue from 'vue';
 
 export class BaseMediator{
 
-    constructor(){
+    constructor(view){
+        this._view = view; 
         this._actionBus = new ActionBus();
         this._listeners = new Map();
     }
 
     init(){
-
+        
     }
 
-    on(actionType, handler){
-        let symbol = this._actionBus.on(actionType,handler);
+    on(actionType, handler, ...rest){
+        let symbol = this._actionBus.on(actionType,handler, ...rest);
         this._listeners.set(symbol,symbol);
         return symbol;
     }
@@ -34,6 +36,7 @@ export class BaseMediator{
         this._listeners.clear();
         this._listeners = new Map();
         this._actionBus = null;
+        this._view = null;
     }
 
 }

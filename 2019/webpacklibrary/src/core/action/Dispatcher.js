@@ -13,18 +13,19 @@ export class Dispatcher{
         let n = handlers.length;
         for(let i=0;i<n;i++){
             let handler = handlers[i].get('handler');
+            let rest = handlers[i].get('rest');
             if(!handler) continue;
-            handler(action.payload);
+            handler(...rest,action.payload);
         }
     }
 
-    on(actionType,handler){
+    on(actionType,handler, ...rest){
         if(!actionType) throw new Error('actionType无效');
         if(!this._listeners.has(actionType)){
             this._listeners.set(actionType, []);
         }
         let handlers = this._listeners.get(actionType);
-        let info = this._createHandlerInfo(handler);
+        let info = this._createHandlerInfo(handler,rest);
         handlers.push(info);
         return info.get('symbol');
     }
@@ -50,10 +51,11 @@ export class Dispatcher{
         this._listeners = new Map();
     }
 
-    _createHandlerInfo(handler){
+    _createHandlerInfo(handler,rest){
         let symbol = Symbol();
         let map = new Map();
         map.set('symbol', symbol);
+        map.set('rest', rest);
         map.set('handler', handler);
         return map;
     }

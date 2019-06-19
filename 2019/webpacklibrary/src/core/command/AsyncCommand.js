@@ -1,14 +1,15 @@
 import { BaseCommand } from "./BaseCommand";
-import { BaseService } from "../service/BaseService";
+import { Service } from "../service/Service";
 
 
 export class AsyncCommand extends BaseCommand{
 
-    constructor(){
+    constructor(serviceType){
         super(...arguments);
+        this._serviceType = serviceType;
     }
 
-    get service(){return BaseService.getService();}
+    get service(){return Service.getService(this._serviceType,this);}
 
     success(data,response){
 
