@@ -10,8 +10,8 @@ export class BaseCommand{
         
     }
 
-    fire(action){
-        this._actionBus.fire(action);
+    fire(action, ...rest){
+        this._actionBus.fire(action, ...rest);
     }
 
 }

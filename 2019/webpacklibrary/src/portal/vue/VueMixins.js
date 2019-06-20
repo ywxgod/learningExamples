@@ -5,14 +5,14 @@ export class VueMediator extends BaseMediator{}
 export const VueMixins = {
 
     methods: {
-        $dispatch(action){
-            this.$mediator.fire(action);
+        $dispatch(action, ...rest){
+            return this.$mediator.fire(action, ...rest);
         },
         $attach(actionType, handler, ...rest){
-            this.$mediator.on(actionType, handler, ...rest);
+            return this.$mediator.on(actionType, handler, ...rest);
         },
         $detach(symbol){
-            this.$mediator.off(symbol);
+            return this.$mediator.off(symbol);
         },
         $init(){
             //单个mediator组合覆盖

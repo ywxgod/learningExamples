@@ -25,8 +25,8 @@ export class BaseMediator{
         return flag;
     }
 
-    fire(action){
-        return this._actionBus.fire(action);
+    fire(action, ...rest){
+        return this._actionBus.fire(action, ...rest);
     }
 
     destroy(){

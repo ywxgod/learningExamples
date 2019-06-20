@@ -6,7 +6,7 @@ export class Dispatcher{
         this._listeners = new Map();
     }
 
-    fire(action){
+    fire(action, ...params){
         if(!(action instanceof BaseAction)) throw new Error('action必须是BaseAction的实例');
         let handlers = this._listeners.get(action.actionType);
         if(!handlers) return false;
@@ -15,7 +15,7 @@ export class Dispatcher{
             let handler = handlers[i].get('handler');
             let rest = handlers[i].get('rest');
             if(!handler) continue;
-            handler(...rest,action.payload);
+            handler(...rest,...params,action.actionType,action.payload);
         }
     }
 
@@ -34,11 +34,11 @@ export class Dispatcher{
         if(!symbol) return false;
         let flag = false;
         this._listeners.forEach((v,k)=>{
-            let index = k.findIndex(i=>{
+            let index = v.findIndex(i=>{
                 return i.get('symbol')===symbol;
             });
             if(index>=0){
-                k.splice(index,1);
+                v.splice(index,1);
                 flag = true;
                 return;
             }
