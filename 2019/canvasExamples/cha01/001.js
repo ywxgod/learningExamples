@@ -7,4 +7,4 @@ context.textBaseline = 'top';
 context.strokeStyle = 'blue';
 
 
-context.strokeText('What can I do for you?', canvas.width/2,canvas.height/2);
+context.strokeText('What can I do for you?', 0,0);

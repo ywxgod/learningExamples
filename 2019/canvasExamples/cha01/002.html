@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>A Simple Canvas Example</title>
+        <style>
+            body *{
+                margin: 0;
+                padding: 0;
+            }
+
+            body{
+                background-color: darkgoldenrod;
+            }
+            
+            #canvas{
+                margin: 10px;
+                padding: 0px;
+                background: #ffffff;
+                border: thin inset #aaaaaa;
+            }
+            #checkbox{
+                margin: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <p>
+            <input type="checkbox" id="checkbox">
+            <label>通过CSS设置canvas大小: 600*300</label>
+        </p>
+        <canvas id="canvas" width="300" height="150">
+            Canvas not supported
+        </canvas>
+        <script src="002.js"></script>
+    </body>
+</html>
