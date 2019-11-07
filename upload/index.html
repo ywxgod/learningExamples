@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+	<head>
+		<title>upload files</title>
+		<style>
+			.btn{
+				display: inline-block;
+			    line-height: 38px;
+			    font-size: 14px;
+			    text-align: center;
+			    padding: 0px 10px;
+			    background-color: #00ff00;
+			    border: 1px solid #000;
+			    cursor: pointer;
+			    transition: background-color 0.2s
+			}
+			.btn:hover{
+				background-color: #00ffff;
+			}
+
+			#file{
+				position: absolute;;
+				clip: rect(0 0 0 0);
+			}
+
+		</style>
+	</head>
+	<body>
+		<p>Upload a file</p>
+		<form method="post" enctype="multipart/form-data">
+			<p>
+				<input type="text" name="description">
+			</p>
+			<p>
+				<label class="btn" for="file">文件上传</label>
+				<input type="file" name="files" id="file" multiple>
+			</p>
+		</form>
+		<script type="text/javascript" src="../node_modules/axios/dist/axios.js"></script>
+		<script type="text/javascript" src="./app.js"></script>
+	</body>
+</html>
