@@ -1,5 +1,5 @@
 <template>
-	<my-component ref="child" :key="componentKey"></my-component>
+	<my-component :key="componentKey"></my-component>
 </template>
 <script>
 	import MyComponent from './MyComponent.vue';
