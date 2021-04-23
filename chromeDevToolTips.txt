@@ -1,0 +1,43 @@
+ctrl+shift+c 打开ChromeDevTools-Elements
+ctrl+shift+j 打开console
+ctrl+shift+i 打开上次关闭前的tab
+ctrl+l 清空控制台
+
+查看打印模式的渲染效果：
+1. ctrl+shift+p打开命令菜单，输入rendering，找到Show Rendering项
+2. 在Emulate CSS Media下来框中选择print
+
+查看用的和未用过的css
+1. ctrl+shift+p打开命令菜单，输入coverage,选中Show Coverage
+2. 点击按钮：Start Instrumenting Converage and Reload Page - 页面会刷新
+3. 查看列表中显示的每一个js和css文件：绿色表示使用，红色表示未使用
+如何删除无用css可以参考：https://www.keycdn.com/blog/remove-unused-css
+
+$_ 返回最后一次的表达式的值
+$0 返回elements面板中当前选中的元素引用
+$(selector) 等价document.querySelector(),即返回查找到的第一个元素
+$$(selector) 等价document.querySelectorAll()
+
+在请求和响应中搜索
+1. 点击network面板中的搜索按钮，输入要查找的关键字，如：cache-control
+
+阻止某个资源的加载
+1. ctrl+shift+p打开命令菜单，输入blocking, 找到Request blocking
+2. 点击Add pattern添加需要阻塞的资源，如：xxx.css
+
+重新发送某个ajax请求
+1. 在请求列表中右键，选择replay XHR。
+
+添加xhr断点
+1. 在XHR/fetch breakpoints面板中点击+按钮，输入你要设置断点的url所包含的字符。
+
+用临时全局变量存储控制台输出的数据
+1.直接在输出的数据上右键
+
+调整数值
+1. 选中需要调整的数字，按向上箭头(数值+1)或者向下箭头(数值-1)
+2. 同时按住alt键，数值改变0.1;同时按住shift键，数值改变10
+
+在源代码中进行全局搜索：ctrl+shift+f
+快速切换颜色格式：按住shift同时点击颜色色块图标
+
