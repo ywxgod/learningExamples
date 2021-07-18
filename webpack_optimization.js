@@ -66,3 +66,21 @@ splitChunks: {
                 // }
             }
         },
+
+ //      配置文件路径
+ /Users/etc/stunnel/stunnel.conf
+里面的内容是
+client = yes
+
+[proxy-jp]
+accept = 127.0.0.1:9900
+connect = SSLSpeedy地址:443
+sslspeedy地址怎么看？请登陆网站，点击my vpn，点击你的vpn用户名，然后点击服务器列表一行的 Surge 按钮，你会看到弹出这样的配置文件：
+
+[Proxy]
+JP0=https,jp0.60in.com ,443,user,pass
+JP1=https,jp1.60in.com ,443,user,pass
+JP2=https,jp2.60in.com ,443,user,pass 
+LA= https,la.60in.com, 443,user,pass
+然后终端里面输入
+ps -ef |grep stunnel|awk '{print $2}'|xargs kill;stunnel
